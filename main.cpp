@@ -1,57 +1,10 @@
 #include <iostream>
+#include "glFunctions.h"
 
-#if _WIN32
-#include <windows.h>
-#endif
-#if _APPLE_
-#include <OpenGL/gl.h>
-#include <OpenGL/glu.h>
-#include <GLUT.glut.h>
-#else 
-#include <GL/gl.h>
-#include <GL/glu.h>
-#include <GL/glut.h>
-#endif
-
-void display()
-{
-    // Clears sets the bitplane area of a window to values previously selected by glClearColor, glClearDepth ect..., (Clears the buffers)
-    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-    glEnable(GL_DEPTH_TEST);
-    glEnable(GL_CULL_FACE);
-
-    // CODE GOES HERE
-
-   
+using namespace std;
+// using namespace glFunctions;
 
 
-    int err;
-
-    // Error Checking
-    while ((err = glGetError()) != GL_NO_ERROR)
-        printf("display: %s\n", gluErrorString(err));
-
-    // If double buffred will swap the drawing and displaying buffers
-    glutSwapBuffers();
-    // Marks the window as needing to be redisplayed.( Call this method again)
-    glutPostRedisplay();
-}
-
-
-
-void keyboard(unsigned char key, int x, int y)
-{
-    switch (key)
-    {
-        case 27:
-        case 'q':
-            exit(EXIT_SUCCESS);
-            break;
-        default:
-            break;
-
-    }
-}
 
 void init()
 {
@@ -75,8 +28,8 @@ int main(int argc, char **argv)
     GLUT_DEPTH is used to select a window with a Depth Buffer
     */
     glutInitDisplayMode(GLUT_RGB | GLUT_DOUBLE | GLUT_DEPTH);
-    // Creates a top level window, the window in this case will be called "I3DG&A - Tutorial2"
-    glutCreateWindow("I3DG&A - Tutorial 2");
+    // Creates a top level window, the window in this case will be called "Asteroids"
+    glutCreateWindow("Asteroids");
     glutReshapeWindow(1920, 1080);
     init();
 
