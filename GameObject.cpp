@@ -16,15 +16,6 @@ GameObject::GameObject(GameObject &copy)
 
 
 
-double GameObject::get_x()
-{
-    return x;
-}
-
-double GameObject::get_y()
-{
-    return y;
-}
 
 string GameObject::toString()
 {
@@ -38,9 +29,22 @@ string GameObject::toString()
 
 void GameObject::draw()
 {
-    glBegin(GL_POINTS);
-    glVertex2f(x, y);
-    glEnd();
+    glTranslatef(get_x(), get_y(), 0);
+    glScalef(get_scale(), get_scale(), 0.0);
+    glRotatef(get_facing(), 0 ,0 ,0.0);
+    // glBegin(GL_POINTS);
+    // glVertex2f(x, y);
+    // glEnd();
+}
+
+double GameObject::get_x()
+{
+    return x;
+}
+
+double GameObject::get_y()
+{
+    return y;
 }
 
 double GameObject::get_scale()
@@ -48,7 +52,19 @@ double GameObject::get_scale()
     return scale;
 }
 
+double GameObject:: get_facing()
+{
+    return facing;
+}
+
 void GameObject::set_scale(double scale)
 {
     this->scale = scale;
 }
+
+void GameObject::set_facing(double facing)
+{
+    this->facing = facing;
+}
+
+

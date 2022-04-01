@@ -154,5 +154,6 @@ void init(int argc, char **argv)
     glutSpecialFunc(keyboardSpecial);
 
     // Initialize Game Objects
-    player1 = Spaceship();
+    player1 = Spaceship(0,0);
+    player1.set_scale(50);
 }

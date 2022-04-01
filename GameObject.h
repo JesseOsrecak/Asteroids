@@ -28,8 +28,11 @@ class GameObject
         double get_scale();
         double get_x();
         double get_y();
+        double get_facing();
+
 
         void set_scale(double scale);
+        void set_facing(double facing);
         string toString();
 
         void draw();
@@ -39,6 +42,7 @@ class GameObject
         double scale;
         double x;
         double y;
+        double facing;
 };
 
 #endif //GAME_OBJECT_H
