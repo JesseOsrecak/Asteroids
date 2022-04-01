@@ -1,10 +1,12 @@
 #include "glFunctions.h"
 #include "Spaceship.h"
+#include "Arena.h"
 #include <iostream>
 
 using namespace std;
 
 Spaceship player1;
+Arena arena;
 bool fullscreen = true;
 
 double res_width = 1280;
@@ -18,9 +20,13 @@ void display()
     glEnable(GL_CULL_FACE);
 
     // CODE GOES HERE
+    // Draw Spaceship
     glPushMatrix();
-
     player1.draw();
+    glPopMatrix();
+
+    glPushMatrix();
+    arena.draw();
     glPopMatrix();
 
 
@@ -115,7 +121,33 @@ void reshape(int width, int height)
 
     glMatrixMode(GL_PROJECTION);
     glLoadIdentity();
-    glOrtho(res_width/2*-1, res_width/2, res_height/2*-1, res_height/2, -1.0, 1.0);
+    glOrtho(width/2*-1, width/2, height/2*-1, height/2, -1.0, 1.0);
+
+    double old_scale = arena.get_scale();
+    double new_scale = width/16;
+
+    if (height < new_scale*9)
+    {
+        new_scale = height/9;
+    }
+
+    arena.set_scale(new_scale);
+
+    double mult_factor = new_scale / old_scale;
+
+    player1.set_scale(player1.get_scale() * mult_factor);
+
+    res_width = glutGet(GLUT_WINDOW_WIDTH);
+    res_height = glutGet(GLUT_WINDOW_HEIGHT);
+
+    
+    
+    // Sets the clipping plane. What Will/Won't be Rendered
+    // glOrtho(res_width/2*-1, res_width/2, res_height/2*-1, res_height/2, -1.0, 1.0);
+
+    // cout<< res_width << "x" << res_height <<endl;
+
+    
 }
 
 
@@ -133,18 +165,21 @@ void init(int argc, char **argv)
         GLUT_SINGLE is used to select a single buffered window. this is the Default is not selected.
     GLUT_DEPTH is used to select a window with a Depth Buffer
     */
+
+   // Sets the clipping plane. What Will/Won't be Rendered
+    glOrtho(res_width/2*-1, res_width/2, res_height/2*-1, res_height/2, -1.0, 1.0);
     glutInitDisplayMode(GLUT_RGB | GLUT_DOUBLE | GLUT_DEPTH);
     // Sets the Initial Size of the Window
     glutInitWindowSize(res_width, res_height);
     // Creates a top level window, the window in this case will be called "Asteroids"
     glutCreateWindow("Asteroids");
-    // Sets Screen into Fullscren Mode
+    // / Sets Screen into Fullscren Mode
     glutFullScreen();
+    
     
     // These Call only need to be done once currently. but they would normally go elsewhere eg dispolay
     glMatrixMode(GL_PROJECTION);
-    // Sets the clipping plane. What Will/Won't be Rendered
-    glOrtho(res_width/2*-1, res_width/2, res_height/2*-1, res_height/2, -1.0, 1.0);
+    
 
     glutReshapeFunc(reshape);
     // Sets the display function for the callback (Which function to call to draw stuff ect...) Each time the window needs to be redrawed this function will be called
@@ -153,7 +188,18 @@ void init(int argc, char **argv)
     glutKeyboardFunc(keyboard);
     glutSpecialFunc(keyboardSpecial);
 
+    generateObjects();
+
+    
+}
+
+
+void generateObjects()
+{
     // Initialize Game Objects
     player1 = Spaceship(0,0);
     player1.set_scale(50);
+    arena = Arena(0,0, 16, 9);
+    arena.set_scale(120);
+
 }

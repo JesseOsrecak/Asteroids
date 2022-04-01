@@ -31,6 +31,7 @@ void keyboardSpecial(int key, int x, int y);
 void reshape(int width, int height);
 
 void init(int argc, char **argv);
+void generateObjects();
 
 // bool fullscreen;
 

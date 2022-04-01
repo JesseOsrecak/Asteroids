@@ -72,4 +72,7 @@ Once Compiled to run the game type into terminal:
     variables such as Location. This class is not intended to be instansiated. Whilst it can be.
 
 ### Spaceship.cpp
-    Scpaceship.cpp hosts the Spaceship class which contains the logic for the spaceship
+    Scpaceship.cpp hosts the Spaceship class which contains the logic for the spaceship. Is a Child class of GameObject
+
+### Arena.cpp
+    Contains the Arena properties. Is a child class of GameObject

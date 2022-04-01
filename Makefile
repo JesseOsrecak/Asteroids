@@ -1,5 +1,5 @@
 
-asteroids: main.o glFunctions.o GameObject.o Spaceship.o
+asteroids: main.o glFunctions.o GameObject.o Spaceship.o Arena.o
 	g++ *.o -lglut -lGLU -lGL -o asteroids
 
 main.o: main.cpp
@@ -13,5 +13,9 @@ GameObject.o: GameObject.cpp
 
 Spaceship.o: Spaceship.cpp
 	g++ -c Spaceship.cpp
+
+Arena.o: Arena.cpp
+	g++ -c Arena.cpp
+	
 clean:
 	rm *.o asteroids
