@@ -2,11 +2,17 @@
 
 ## Author: Jesse Osrecak
 
+## Controls 
+`ESC` The `ESC` key will exit the game.
+`F11` The `F11` key wil enter and exit fullscreen mode
+
+
 
 ## Make
 
 ### Compile
-To comepile the code you can use the make file for easy compilation. Use the following command in the terminal.
+To comepile the code you can use the make file for easy compilation. Use the following command in the 
+terminal:
 
 `make`
 
@@ -33,14 +39,18 @@ The line that begins with:
 
 `asteroids` 
 
-Is the linking command which takes all of the '.o' files as dependcies and will link them together in to the 'asteroids' file.
+Is the linking command which takes all of the '.o' files as dependcies and will link them together
+in to the 'asteroids' file.
 
-For each output file there there needs to be a compilation beforehand for instance the file 'main.cpp' would need
+For each output file there there needs to be a compilation beforehand for instance the file 
+'main.cpp' would need:
+
 `main.o: main.cpp
     g++ -c main.cpp`
 
 ## Running the game
-In order to run the game you must compile the game first see Make -> Compile above for compilation instructions. 
+In order to run the game you must compile the game first see Make -> Compile above for compilation 
+instructions. 
 
 Once Compiled to run the game type into terminal:
 
@@ -50,10 +60,13 @@ Once Compiled to run the game type into terminal:
 
 ### main.cpp
     main.cpp is the main file. This file is what stores the code for running the program.
-    This also houses the code for creating the window.
+    
 
 ### glFunctions.cpp
-    glFunctions is a helper file for the main.cpp file. This houses functions used by openGl to draw, readjust and keybindings.3
+    glFunctions is a helper file for the main.cpp file. This houses functions used by openGl 
+    to draw, readjust and keybindings. This also hosts the functions used to initialze the
+    window.
 
 ### GameObject.cpp
-    GameObject.cpp is a parent class used for the tracking of the a Game objects standard variables such as Location. This class is not intended to be instansiated. Whilst it can be.
+    GameObject.cpp is a parent class used for the tracking of the a Game objects standard 
+    variables such as Location. This class is not intended to be instansiated. Whilst it can be.
