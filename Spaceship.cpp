@@ -54,6 +54,7 @@ void Spaceship::draw()
     glVertex2f(-0.25, 1);
     glEnd();
 
+    // Draw Outline
     glBegin(GL_LINE_LOOP);
     glColor3f(1, 0, 0);
     glVertex2f(0.01, +0.135);
