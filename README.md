@@ -70,3 +70,6 @@ Once Compiled to run the game type into terminal:
 ### GameObject.cpp
     GameObject.cpp is a parent class used for the tracking of the a Game objects standard 
     variables such as Location. This class is not intended to be instansiated. Whilst it can be.
+
+### Spaceship.cpp
+    Scpaceship.cpp hosts the Spaceship class which contains the logic for the spaceship

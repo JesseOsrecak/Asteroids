@@ -1,13 +1,14 @@
 #include "glFunctions.h"
-
+#include "Spaceship.h"
 #include <iostream>
 
 using namespace std;
 
+Spaceship player1;
 bool fullscreen = true;
 
-double width = 1280;
-double height = 720;
+double res_width = 1280;
+double res_height = 720;
 
 void display()
 {
@@ -17,8 +18,10 @@ void display()
     glEnable(GL_CULL_FACE);
 
     // CODE GOES HERE
+    glPushMatrix();
 
-   
+    player1.draw();
+    glPopMatrix();
 
 
     int err;
@@ -108,7 +111,11 @@ void keyboardSpecial(int key, int x, int y)
 
 void reshape(int width, int height)
 {
+    glViewport(0, 0, width, height);
 
+    glMatrixMode(GL_PROJECTION);
+    glLoadIdentity();
+    glOrtho(res_width/2*-1, res_width/2, res_height/2*-1, res_height/2, -1.0, 1.0);
 }
 
 
@@ -128,7 +135,7 @@ void init(int argc, char **argv)
     */
     glutInitDisplayMode(GLUT_RGB | GLUT_DOUBLE | GLUT_DEPTH);
     // Sets the Initial Size of the Window
-    glutInitWindowSize(width, height);
+    glutInitWindowSize(res_width, res_height);
     // Creates a top level window, the window in this case will be called "Asteroids"
     glutCreateWindow("Asteroids");
     // Sets Screen into Fullscren Mode
@@ -137,7 +144,7 @@ void init(int argc, char **argv)
     // These Call only need to be done once currently. but they would normally go elsewhere eg dispolay
     glMatrixMode(GL_PROJECTION);
     // Sets the clipping plane. What Will/Won't be Rendered
-    glOrtho(width/2*-1, width/2, height/2*-1, height/2, -1.0, 1.0);
+    glOrtho(res_width/2*-1, res_width/2, res_height/2*-1, res_height/2, -1.0, 1.0);
 
     glutReshapeFunc(reshape);
     // Sets the display function for the callback (Which function to call to draw stuff ect...) Each time the window needs to be redrawed this function will be called
@@ -146,5 +153,6 @@ void init(int argc, char **argv)
     glutKeyboardFunc(keyboard);
     glutSpecialFunc(keyboardSpecial);
 
-    
+    // Initialize Game Objects
+    player1 = Spaceship();
 }

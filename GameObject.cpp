@@ -4,12 +4,14 @@ GameObject::GameObject(double x, double y)
 {
     this->x = x;
     this->y = y;
+    this->scale = 10;
 }
 
 GameObject::GameObject(GameObject &copy)
 {
     this->x = copy.get_x();
     this->y = copy.get_y();
+    this->scale = copy.get_scale();
 }
 
 
@@ -32,4 +34,21 @@ string GameObject::toString()
 
     return object;
 
+}
+
+void GameObject::draw()
+{
+    glBegin(GL_POINTS);
+    glVertex2f(x, y);
+    glEnd();
+}
+
+double GameObject::get_scale()
+{
+    return scale;
+}
+
+void GameObject::set_scale(double scale)
+{
+    this->scale = scale;
 }
