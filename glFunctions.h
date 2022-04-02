@@ -29,7 +29,7 @@ void keyboard(unsigned char key, int x, int y);
 void keyboardSpecial(int key, int x, int y);
 
 void reshape(int width, int height);
-
+void idle();
 void init(int argc, char **argv);
 void generateObjects();
 

@@ -12,6 +12,7 @@ bool fullscreen = true;
 double res_width = 1280;
 double res_height = 720;
 
+
 void display()
 {
     // Clears sets the bitplane area of a window to values previously selected by glClearColor, glClearDepth ect..., (Clears the buffers)
@@ -53,8 +54,12 @@ void keyboard(unsigned char key, int x, int y)
             exit(EXIT_SUCCESS);
             break;
         
-        case 122:
-            cout << "f11" <<endl;
+        case 'W':
+            break;
+        case 'A':
+            break;
+        case 'D':
+            break;
         default:
             break;
 
@@ -151,7 +156,15 @@ void reshape(int width, int height)
 }
 
 
-
+void idle()
+{
+//   float cur_time = glutGet(GLUT_ELAPSED_TIME) / 1000.0;
+//   float dt = cur_time - g_last_time;
+//   update_game_state(&g_game_object, dt);
+//   g_last_time = cur_time;
+    player1.updatePosition();
+    glutPostRedisplay();
+}
 
 void init(int argc, char **argv)
 {
@@ -188,8 +201,11 @@ void init(int argc, char **argv)
     glutKeyboardFunc(keyboard);
     glutSpecialFunc(keyboardSpecial);
 
+    glutIdleFunc(idle);
+
     generateObjects();
 
+    
     
 }
 
