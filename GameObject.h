@@ -35,21 +35,37 @@ class GameObject
         double get_degrees_per_second();
         float get_last_update();
 
+        bool get_rotate_left();
+        bool get_rotate_right();
+        bool get_move_forward();
+
         // Setters
         void set_scale(double scale);
         void set_facing(double facing);
         void set_pixels_per_second(double pixels);
         void set_degrees_per_second(double degrees);
+        void set_last_update(float time);
 
+
+        void set_rotate_left(bool rotate);
+        void set_rotate_right(bool roate);
+        void set_move_forward(bool move);
         // Other
         string toString();
         void draw();
         void updatePosition();
+        void moveForward(float time_elappsed);
+        void rotateRight(float time_elappsed);
+        void rotateLeft(float time_elappsed);
+        void resetMovement();
+
+
+        
+
         
     protected:
-        void set_last_update(float time);
-        void moveForward(float time_elappsed);
-        void rotate(float time_elappsed);
+        
+        
 
     private:
         double scale;
@@ -58,6 +74,10 @@ class GameObject
         double facing;
         double degrees_per_second;
         double pixels_per_second;
+
+        bool rotate_left;
+        bool rotate_right;
+        bool move_forward;
 
         float last_update;
 };

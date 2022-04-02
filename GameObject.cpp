@@ -1,5 +1,5 @@
 #include "GameObject.h"
-
+#include <iostream>
 GameObject::GameObject(double x, double y)
 {
     this->x = x;
@@ -7,6 +7,9 @@ GameObject::GameObject(double x, double y)
     this->scale = 10;
     this->degrees_per_second = 0;
     this->pixels_per_second = 0;
+    bool move_forward = false;
+    bool turn_right = false;
+    bool turn_left = false;
 }
 
 GameObject::GameObject(double x, double y, double scale, double degrees_per_second, double pixels_per_second)
@@ -16,6 +19,9 @@ GameObject::GameObject(double x, double y, double scale, double degrees_per_seco
     this->scale = scale;
     this->degrees_per_second = degrees_per_second;
     this->pixels_per_second = pixels_per_second;
+    bool move_forward = false;
+    bool turn_right = false;
+    bool turn_left = false;
 }
 
 GameObject::GameObject(GameObject &copy)
@@ -23,6 +29,11 @@ GameObject::GameObject(GameObject &copy)
     this->x = copy.get_x();
     this->y = copy.get_y();
     this->scale = copy.get_scale();
+    this->degrees_per_second = copy.get_degrees_per_second();
+    this->pixels_per_second = copy.get_pixels_per_second();
+    bool move_forward = copy.get_move_forward();
+    bool turn_right = copy.get_rotate_right();;
+    bool turn_left = copy.get_rotate_left();
 }
 
 
@@ -47,6 +58,70 @@ void GameObject::draw()
     // glVertex2f(x, y);
     // glEnd();
 }
+
+void GameObject::rotateLeft(float time_elappsed)
+{
+    double ammout_to_rotate = degrees_per_second * time_elappsed;
+    facing = (int)(facing + ammout_to_rotate) % 360;
+    
+}
+
+void GameObject::rotateRight(float time_elappsed)
+{
+    double ammout_to_rotate = degrees_per_second * time_elappsed;
+    facing = facing - ammout_to_rotate;
+    if (facing < 0)
+    {
+        facing = facing + 360;
+    }
+    
+}
+
+void GameObject::moveForward(float time_elappsed)
+{
+
+
+    double pixels_to_move = pixels_per_second * time_elappsed;
+
+    // TODO Calculate new X and Y Based on Previous X & Y, facing and pixels_to_move
+
+    
+}
+
+void GameObject::updatePosition()
+{
+    // Current Time In Seconds
+    float current_time = glutGet(GLUT_ELAPSED_TIME)/1000;
+    float time_elappsed = current_time - last_update;
+    cout<< "Current Time: " << to_string(current_time) <<endl;
+    if (move_forward)
+    {
+        moveForward(time_elappsed);
+        cout << "PLayer 1:  Forward" << endl;
+    }
+    if (rotate_right)
+    {
+        rotateRight(time_elappsed);
+        cout << "PLayer 1:  Right" << endl;
+    }
+    if (rotate_left)
+    {
+        rotateLeft(time_elappsed);
+        cout << "PLayer 1:  Left" << endl;
+    }
+
+
+    last_update = current_time;
+
+}
+
+void GameObject::resetMovement()
+{
+    move_forward = false;
+    rotate_left = false;
+    rotate_right = false;
+}
+
 
 double GameObject::get_x()
 {
@@ -85,6 +160,20 @@ float GameObject::get_last_update()
     return last_update;
 }
 
+bool GameObject::get_rotate_left()
+{
+    return rotate_left;
+}
+
+bool GameObject::get_rotate_right()
+{
+    return rotate_right;
+}
+
+bool GameObject::get_move_forward()
+{
+    return move_forward;
+}
 
 void GameObject::set_scale(double scale)
 {
@@ -106,29 +195,19 @@ void GameObject::set_pixels_per_second(double pixels)
     this-> pixels_per_second = pixels;
 }
 
-void GameObject::moveForward(float time_elappsed)
+
+void GameObject::set_move_forward(bool move)
 {
-
-
-    double pixels_to_move = pixels_per_second * time_elappsed;
-
-    // TODO Calculate new X and Y Based on Previous X & Y, facing and pixels_to_move
-
-    
+    this->move_forward = move;
 }
 
-void GameObject::rotate(float time_elappsed)
+void GameObject::set_rotate_left(bool rotate)
 {
-    double ammout_to_rotate = degrees_per_second * time_elappsed;
-    facing = (int)(facing + ammout_to_rotate) % 360;
-    
+    this->rotate_left = rotate;
 }
 
-void GameObject::updatePosition()
+void GameObject::set_rotate_right(bool rotate)
 {
-    // Current Time In Seconds
-    float current_time = glutGet(GLUT_ELAPSED_TIME)/1000;
-    float time_elappsed = current_time - last_update;
-    last_update = current_time;
-
+    this->rotate_right = rotate;
 }
+

@@ -51,17 +51,25 @@ void keyboard(unsigned char key, int x, int y)
     {
         // This is for the ESC KEZY Detection
         case 27:
+            cout<<"E";
             exit(EXIT_SUCCESS);
             break;
         
         case 'W':
+            cout << "F";
+            player1.set_move_forward(true);
             break;
         case 'A':
+            cout << "A";
+            player1.set_rotate_left(true);
             break;
         case 'D':
+            cout << "D";
+            player1.set_rotate_right(true);
             break;
         default:
             break;
+        cout << endl;
 
     }
 }
@@ -158,10 +166,13 @@ void reshape(int width, int height)
 
 void idle()
 {
-//   float cur_time = glutGet(GLUT_ELAPSED_TIME) / 1000.0;
-//   float dt = cur_time - g_last_time;
-//   update_game_state(&g_game_object, dt);
-//   g_last_time = cur_time;
+// //   float cur_time = glutGet(GLUT_ELAPSED_TIME) / 1000.0;
+// //   float dt = cur_time - g_last_time;
+// //   update_game_state(&g_game_object, dt);
+// //   g_last_time = cur_time;
+//     player1.updatePosition();
+
+    // Update All object Positions
     player1.updatePosition();
     glutPostRedisplay();
 }
@@ -214,7 +225,7 @@ void generateObjects()
 {
     // Initialize Game Objects
     player1 = Spaceship(0,0);
-    player1.set_scale(50);
+    // player1.set_scale(50);
     arena = Arena(0,0, 16, 9);
     arena.set_scale(120);
 
