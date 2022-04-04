@@ -1,9 +1,10 @@
 #include "GameObject.h"
 #include <iostream>
+#include "math.h"
 GameObject::GameObject(double x, double y)
 {
-    this->x = x;
-    this->y = y;
+    position = Position(x,y);
+
     this->scale = 10;
     this->degrees_per_second = 0;
     this->pixels_per_second = 0;
@@ -14,8 +15,9 @@ GameObject::GameObject(double x, double y)
 
 GameObject::GameObject(double x, double y, double scale, double degrees_per_second, double pixels_per_second)
 {
-    this->x = x;
-    this->y = y;
+    // this->x = x;
+    // this->y = y;
+    position = Position(x,y);
     this->scale = scale;
     this->degrees_per_second = degrees_per_second;
     this->pixels_per_second = pixels_per_second;
@@ -26,8 +28,8 @@ GameObject::GameObject(double x, double y, double scale, double degrees_per_seco
 
 GameObject::GameObject(GameObject &copy)
 {
-    this->x = copy.get_x();
-    this->y = copy.get_y();
+
+    position = Position(copy.get_x(),copy.get_y());
     this->scale = copy.get_scale();
     this->degrees_per_second = copy.get_degrees_per_second();
     this->pixels_per_second = copy.get_pixels_per_second();
@@ -41,49 +43,57 @@ GameObject::GameObject(GameObject &copy)
 
 string GameObject::toString()
 {
-    string location = "(" + to_string(x) + ", " + to_string(y) + ")";
-
-    string object = location;
+    string location = "(" + to_string(get_x()) + ", " + to_string(get_y()) + ")\n";
+    string direction = "Facing: " + to_string(facing) +"(0 = North)\n";
+    string object = location + direction;
 
     return object;
 
 }
 
 void GameObject::draw()
-{
+{   
+    // cout<<toString()<<endl;
     glTranslatef(get_x(), get_y(), 0);
     glScalef(get_scale(), get_scale(), 0.0);
-    glRotatef(get_facing(), 0 ,0 ,0.0);
+    glRotatef(get_facing(), 0 ,0 ,1);
     // glBegin(GL_POINTS);
     // glVertex2f(x, y);
     // glEnd();
 }
 
-void GameObject::rotateLeft(float time_elappsed)
+void GameObject::rotateLeft(double time_elappsed)
 {
     double ammout_to_rotate = degrees_per_second * time_elappsed;
+    // facing += 10;//TEST
     facing = (int)(facing + ammout_to_rotate) % 360;
+    
     
 }
 
-void GameObject::rotateRight(float time_elappsed)
+void GameObject::rotateRight(double time_elappsed)
 {
     double ammout_to_rotate = degrees_per_second * time_elappsed;
+    
     facing = facing - ammout_to_rotate;
-    if (facing < 0)
+    // facing -= 10;//Test
+    while (facing < 0)
     {
         facing = facing + 360;
     }
     
+    cout<<"Rotating Right: " << to_string(ammout_to_rotate) << "\nDirection: " << facing <<endl << "Time: " << to_string(time_elappsed) << endl;
+    
 }
 
-void GameObject::moveForward(float time_elappsed)
+void GameObject::moveForward(double time_elappsed)
 {
 
-
+    
     double pixels_to_move = pixels_per_second * time_elappsed;
 
     // TODO Calculate new X and Y Based on Previous X & Y, facing and pixels_to_move
+    position = calculate_new_position(get_x(), get_y(),facing,pixels_to_move);
 
     
 }
@@ -91,25 +101,28 @@ void GameObject::moveForward(float time_elappsed)
 void GameObject::updatePosition()
 {
     // Current Time In Seconds
-    float current_time = glutGet(GLUT_ELAPSED_TIME)/1000;
-    float time_elappsed = current_time - last_update;
-    cout<< "Current Time: " << to_string(current_time) <<endl;
-    if (move_forward)
+    double current_time = glutGet(GLUT_ELAPSED_TIME)/1000.0;
+    double time_elappsed = current_time - last_update;
+    // cout<< "Current Time: " << to_string(current_time) <<endl;
+    // cout<< "Laste Time: " << to_string(last_update) <<endl;
+    // cout<< "Time Diff: " << to_string(time_elappsed) << endl;
+    if (move_forward == true)
     {
         moveForward(time_elappsed);
         cout << "PLayer 1:  Forward" << endl;
     }
-    if (rotate_right)
+    if (rotate_right == true) 
     {
         rotateRight(time_elappsed);
         cout << "PLayer 1:  Right" << endl;
     }
-    if (rotate_left)
+    if (rotate_left == true)
     {
         rotateLeft(time_elappsed);
         cout << "PLayer 1:  Left" << endl;
     }
 
+    resetMovement();
 
     last_update = current_time;
 
@@ -125,12 +138,12 @@ void GameObject::resetMovement()
 
 double GameObject::get_x()
 {
-    return x;
+    return position.get_x();
 }
 
 double GameObject::get_y()
 {
-    return y;
+    return position.get_y();
 }
 
 double GameObject::get_scale()
@@ -175,6 +188,11 @@ bool GameObject::get_move_forward()
     return move_forward;
 }
 
+Position GameObject::get_position()
+{   
+    return position;
+}
+
 void GameObject::set_scale(double scale)
 {
     this->scale = scale;
@@ -211,3 +229,7 @@ void GameObject::set_rotate_right(bool rotate)
     this->rotate_right = rotate;
 }
 
+void GameObject::set_position(Position position)
+{
+    this->position = position;
+}

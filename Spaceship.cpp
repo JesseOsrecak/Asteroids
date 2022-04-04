@@ -9,6 +9,11 @@ Spaceship::Spaceship(double x, double y) : GameObject(x,y)
 {
 
 }
+
+Spaceship::Spaceship(double x, double y, double scale, double degrees_per_second, double pixels_per_second) : GameObject( x,  y,  scale,  degrees_per_second,  pixels_per_second)
+{
+
+}
 Spaceship::Spaceship(Spaceship &copy) : GameObject(copy)
 {
 

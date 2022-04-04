@@ -54,15 +54,17 @@ void keyboard(unsigned char key, int x, int y)
             cout<<"E";
             exit(EXIT_SUCCESS);
             break;
-        
+        case 'w':
         case 'W':
             cout << "F";
             player1.set_move_forward(true);
             break;
+        case 'a':
         case 'A':
             cout << "A";
             player1.set_rotate_left(true);
             break;
+        case 'd':
         case 'D':
             cout << "D";
             player1.set_rotate_right(true);
@@ -173,6 +175,7 @@ void idle()
 //     player1.updatePosition();
 
     // Update All object Positions
+    // player1.set_rotate_right(true);//TEST
     player1.updatePosition();
     glutPostRedisplay();
 }
@@ -224,8 +227,7 @@ void init(int argc, char **argv)
 void generateObjects()
 {
     // Initialize Game Objects
-    player1 = Spaceship(0,0);
-    // player1.set_scale(50);
+    player1 = Spaceship(0,0, 50, 360, 300);
     arena = Arena(0,0, 16, 9);
     arena.set_scale(120);
 

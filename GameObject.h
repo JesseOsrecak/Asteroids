@@ -15,6 +15,7 @@
 #endif
 
 #include <string>
+#include "Position.h"
 using namespace std;
 
 
@@ -33,30 +34,34 @@ class GameObject
         double get_facing();
         double get_pixels_per_second();
         double get_degrees_per_second();
+        
         float get_last_update();
 
         bool get_rotate_left();
         bool get_rotate_right();
         bool get_move_forward();
 
+        Position get_position();
         // Setters
         void set_scale(double scale);
         void set_facing(double facing);
         void set_pixels_per_second(double pixels);
         void set_degrees_per_second(double degrees);
-        void set_last_update(float time);
+        void set_last_update(double time);
 
 
         void set_rotate_left(bool rotate);
         void set_rotate_right(bool roate);
         void set_move_forward(bool move);
+
+        void set_position( Position position);
         // Other
         string toString();
         void draw();
         void updatePosition();
-        void moveForward(float time_elappsed);
-        void rotateRight(float time_elappsed);
-        void rotateLeft(float time_elappsed);
+        void moveForward(double time_elappsed);
+        void rotateRight(double time_elappsed);
+        void rotateLeft(double time_elappsed);
         void resetMovement();
 
 
@@ -69,8 +74,8 @@ class GameObject
 
     private:
         double scale;
-        double x;
-        double y;
+        // double x;
+        // double y;
         double facing;
         double degrees_per_second;
         double pixels_per_second;
@@ -80,6 +85,9 @@ class GameObject
         bool move_forward;
 
         float last_update;
+
+        Position position;
+
 };
 
 #endif //GAME_OBJECT_H
