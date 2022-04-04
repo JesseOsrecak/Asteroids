@@ -76,3 +76,9 @@ Once Compiled to run the game type into terminal:
 
 ### Arena.cpp
     Contains the Arena properties. Is a child class of GameObject
+
+### math.cpp
+    Contains complex mathematics for code function such as player Movement
+
+### Position.cpp
+    Is a simple class to be able to store both X and Y values so that you can return a position from a method.
