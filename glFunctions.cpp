@@ -51,28 +51,44 @@ void keyboard(unsigned char key, int x, int y)
     {
         // This is for the ESC KEZY Detection
         case 27:
-            cout<<"E";
             exit(EXIT_SUCCESS);
             break;
         case 'w':
         case 'W':
-            cout << "F";
             player1.set_move_forward(true);
             break;
         case 'a':
         case 'A':
-            cout << "A";
             player1.set_rotate_left(true);
             break;
         case 'd':
         case 'D':
-            cout << "D";
             player1.set_rotate_right(true);
             break;
         default:
             break;
-        cout << endl;
 
+    }
+}
+
+void keyboardUp(unsigned char key, int x, int y)
+{
+    switch (key)
+    {
+                case 'w':
+        case 'W':
+            player1.set_move_forward(false);
+            break;
+        case 'a':
+        case 'A':
+            player1.set_rotate_left(false);
+            break;
+        case 'd':
+        case 'D':
+            player1.set_rotate_right(false);
+            break;
+        default:
+            break;
     }
 }
 
@@ -155,12 +171,6 @@ void reshape(int width, int height)
     res_width = glutGet(GLUT_WINDOW_WIDTH);
     res_height = glutGet(GLUT_WINDOW_HEIGHT);
 
-    
-    
-    // Sets the clipping plane. What Will/Won't be Rendered
-    // glOrtho(res_width/2*-1, res_width/2, res_height/2*-1, res_height/2, -1.0, 1.0);
-
-    // cout<< res_width << "x" << res_height <<endl;
 
     
 }
@@ -168,14 +178,8 @@ void reshape(int width, int height)
 
 void idle()
 {
-// //   float cur_time = glutGet(GLUT_ELAPSED_TIME) / 1000.0;
-// //   float dt = cur_time - g_last_time;
-// //   update_game_state(&g_game_object, dt);
-// //   g_last_time = cur_time;
-//     player1.updatePosition();
 
     // Update All object Positions
-    // player1.set_rotate_right(true);//TEST
     player1.updatePosition();
     glutPostRedisplay();
 }
@@ -213,6 +217,7 @@ void init(int argc, char **argv)
     glutDisplayFunc(display);
     // Sets the keyboard callback for the current window. (Each time a key is pressed the function will be called)
     glutKeyboardFunc(keyboard);
+    glutKeyboardUpFunc(keyboardUp);
     glutSpecialFunc(keyboardSpecial);
 
     glutIdleFunc(idle);

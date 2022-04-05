@@ -25,6 +25,8 @@
 void display();
 // Keyboard detects regular key presses
 void keyboard(unsigned char key, int x, int y);
+// Keyboard up detecks regular key releases
+void keyboardUp(unsigned char key, int x, int y);
 // Keyboard special detects special key presses
 void keyboardSpecial(int key, int x, int y);
 
@@ -33,7 +35,7 @@ void idle();
 void init(int argc, char **argv);
 void generateObjects();
 
-// bool fullscreen;
+
 
 #endif  // GL_FUNCTIONS_H
 

@@ -53,19 +53,14 @@ string GameObject::toString()
 
 void GameObject::draw()
 {   
-    // cout<<toString()<<endl;
     glTranslatef(get_x(), get_y(), 0);
     glScalef(get_scale(), get_scale(), 0.0);
     glRotatef(get_facing(), 0 ,0 ,1);
-    // glBegin(GL_POINTS);
-    // glVertex2f(x, y);
-    // glEnd();
 }
 
 void GameObject::rotateLeft(double time_elappsed)
 {
     double ammout_to_rotate = degrees_per_second * time_elappsed;
-    // facing += 10;//TEST
     facing = (int)(facing + ammout_to_rotate) % 360;
     
     
@@ -82,7 +77,6 @@ void GameObject::rotateRight(double time_elappsed)
         facing = facing + 360;
     }
     
-    cout<<"Rotating Right: " << to_string(ammout_to_rotate) << "\nDirection: " << facing <<endl << "Time: " << to_string(time_elappsed) << endl;
     
 }
 
@@ -91,8 +85,6 @@ void GameObject::moveForward(double time_elappsed)
 
     
     double pixels_to_move = pixels_per_second * time_elappsed;
-
-    // TODO Calculate new X and Y Based on Previous X & Y, facing and pixels_to_move
     position = calculate_new_position(get_x(), get_y(),facing,pixels_to_move);
 
     
@@ -103,26 +95,19 @@ void GameObject::updatePosition()
     // Current Time In Seconds
     double current_time = glutGet(GLUT_ELAPSED_TIME)/1000.0;
     double time_elappsed = current_time - last_update;
-    // cout<< "Current Time: " << to_string(current_time) <<endl;
-    // cout<< "Laste Time: " << to_string(last_update) <<endl;
-    // cout<< "Time Diff: " << to_string(time_elappsed) << endl;
     if (move_forward == true)
     {
         moveForward(time_elappsed);
-        cout << "PLayer 1:  Forward" << endl;
+
     }
     if (rotate_right == true) 
     {
         rotateRight(time_elappsed);
-        cout << "PLayer 1:  Right" << endl;
     }
     if (rotate_left == true)
     {
         rotateLeft(time_elappsed);
-        cout << "PLayer 1:  Left" << endl;
     }
-
-    resetMovement();
 
     last_update = current_time;
 

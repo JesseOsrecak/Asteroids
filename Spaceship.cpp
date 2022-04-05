@@ -23,13 +23,7 @@ void Spaceship::draw()
 {
     GameObject::draw(); //Applies Translate, Rotate, Scale
 
-    // Draw Exhaust
-    // glBegin(GL_POLYGON);
-    // glColor3f(1, 0.3, 0.3);
-    // glVertex2f(0.0625, +0.125);
-    // glVertex2f(-0.0625, +0.125);
-    // glVertex2f(0, -0.125);
-    // glEnd();
+
 
     // Draw Cockpit
     glBegin(GL_POLYGON);
