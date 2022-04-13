@@ -35,6 +35,9 @@ void idle();
 void init(int argc, char **argv);
 void generateObjects();
 
+void set_debug_mode();
+
+
 
 
 #endif  // GL_FUNCTIONS_H

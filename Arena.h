@@ -13,6 +13,12 @@ class Arena: public GameObject
         double get_width();
         double get_height();
         void draw();
+
+        void draw_north();
+        void draw_south();
+        void draw_east();
+        void draw_west();
+
     private:
         double width;
         double height;

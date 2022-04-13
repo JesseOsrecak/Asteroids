@@ -1,5 +1,5 @@
 
-asteroids: main.o glFunctions.o GameObject.o Spaceship.o Arena.o math.o Position.o
+asteroids: main.o glFunctions.o GameObject.o Spaceship.o Arena.o math.o Position.o CollissionBox.o collission_test.o
 	g++ *.o -lglut -lGLU -lGL -o asteroids
 
 main.o: main.cpp
@@ -22,6 +22,12 @@ math.o: math.cpp
 
 Position.o: Position.cpp
 	g++ -c Position.cpp
+
+CollissionBox.o: CollissionBox.cpp
+	g++ -c CollissionBox.cpp
+
+collission_test.o: tests/collission_test.cpp
+	g++ -c tests/collission_test.cpp
 
 clean:
 	rm *.o asteroids

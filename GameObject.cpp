@@ -11,6 +11,7 @@ GameObject::GameObject(double x, double y)
     bool move_forward = false;
     bool turn_right = false;
     bool turn_left = false;
+    bool debud_mode = false;
 }
 
 GameObject::GameObject(double x, double y, double scale, double degrees_per_second, double pixels_per_second)
@@ -24,6 +25,7 @@ GameObject::GameObject(double x, double y, double scale, double degrees_per_seco
     bool move_forward = false;
     bool turn_right = false;
     bool turn_left = false;
+    bool debug_mode = false;
 }
 
 GameObject::GameObject(GameObject &copy)
@@ -36,6 +38,7 @@ GameObject::GameObject(GameObject &copy)
     bool move_forward = copy.get_move_forward();
     bool turn_right = copy.get_rotate_right();;
     bool turn_left = copy.get_rotate_left();
+    bool debug_mode = copy.get_debug_mode();
 }
 
 
@@ -56,8 +59,31 @@ void GameObject::draw()
     glTranslatef(get_x(), get_y(), 0);
     glScalef(get_scale(), get_scale(), 0.0);
     glRotatef(get_facing(), 0 ,0 ,1);
+
+    if(debug_mode == true)
+        debug_draw();
 }
 
+void GameObject::debug_draw()
+{
+
+    glBegin(GL_LINES);
+    glColor3f(1, 0, 0);
+    glVertex2f(0, 0);
+    glVertex2f(1, 0);
+    glEnd();
+
+    glBegin(GL_LINES);
+    glColor3f(0, 1, 0);
+    glVertex2f(0, 0);
+    glVertex2f(0, 1);
+    glEnd();
+}
+
+// void GameObject::debug_draw_hitbox()
+// {
+//     // Not Implemented
+// }
 void GameObject::rotateLeft(double time_elappsed)
 {
     double ammout_to_rotate = degrees_per_second * time_elappsed;
@@ -173,6 +199,11 @@ bool GameObject::get_move_forward()
     return move_forward;
 }
 
+bool GameObject::get_debug_mode()
+{
+    return debug_mode;
+}
+
 Position GameObject::get_position()
 {   
     return position;
@@ -214,7 +245,14 @@ void GameObject::set_rotate_right(bool rotate)
     this->rotate_right = rotate;
 }
 
+
+void GameObject::set_debug_mode(bool debug_mode)
+{
+    this->debug_mode = debug_mode;
+}
+
 void GameObject::set_position(Position position)
 {
     this->position = position;
 }
+

@@ -5,30 +5,31 @@
 
 using namespace std;
 
-Spaceship player1;
-Arena arena;
+Spaceship *player1;
+Arena *arena;
 bool fullscreen = true;
 
 double res_width = 1280;
 double res_height = 720;
 
-
+bool debug_mode = false;
 void display()
 {
     // Clears sets the bitplane area of a window to values previously selected by glClearColor, glClearDepth ect..., (Clears the buffers)
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-    glEnable(GL_DEPTH_TEST);
+    // glEnable(GL_DEPTH_TEST);
     glEnable(GL_CULL_FACE);
 
     // CODE GOES HERE
+    glPushMatrix();
+    arena->draw();
+    glPopMatrix();
     // Draw Spaceship
     glPushMatrix();
-    player1.draw();
+    player1->draw();
     glPopMatrix();
 
-    glPushMatrix();
-    arena.draw();
-    glPopMatrix();
+    
 
 
     int err;
@@ -55,15 +56,15 @@ void keyboard(unsigned char key, int x, int y)
             break;
         case 'w':
         case 'W':
-            player1.set_move_forward(true);
+            player1->set_move_forward(true);
             break;
         case 'a':
         case 'A':
-            player1.set_rotate_left(true);
+            player1->set_rotate_left(true);
             break;
         case 'd':
         case 'D':
-            player1.set_rotate_right(true);
+            player1->set_rotate_right(true);
             break;
         default:
             break;
@@ -77,15 +78,15 @@ void keyboardUp(unsigned char key, int x, int y)
     {
                 case 'w':
         case 'W':
-            player1.set_move_forward(false);
+            player1->set_move_forward(false);
             break;
         case 'a':
         case 'A':
-            player1.set_rotate_left(false);
+            player1->set_rotate_left(false);
             break;
         case 'd':
         case 'D':
-            player1.set_rotate_right(false);
+            player1->set_rotate_right(false);
             break;
         default:
             break;
@@ -104,6 +105,7 @@ void keyboardSpecial(int key, int x, int y)
             break;
         // f3
         case 3:
+            set_debug_mode();
             break;
         // f4
         case 4:
@@ -154,7 +156,7 @@ void reshape(int width, int height)
     glLoadIdentity();
     glOrtho(width/2*-1, width/2, height/2*-1, height/2, -1.0, 1.0);
 
-    double old_scale = arena.get_scale();
+    double old_scale = arena->get_scale();
     double new_scale = width/16;
 
     if (height < new_scale*9)
@@ -162,11 +164,11 @@ void reshape(int width, int height)
         new_scale = height/9;
     }
 
-    arena.set_scale(new_scale);
+    arena->set_scale(new_scale);
 
     double mult_factor = new_scale / old_scale;
 
-    player1.set_scale(player1.get_scale() * mult_factor);
+    player1->set_scale(player1->get_scale() * mult_factor);
 
     res_width = glutGet(GLUT_WINDOW_WIDTH);
     res_height = glutGet(GLUT_WINDOW_HEIGHT);
@@ -180,7 +182,7 @@ void idle()
 {
 
     // Update All object Positions
-    player1.updatePosition();
+    player1->updatePosition();
     glutPostRedisplay();
 }
 
@@ -232,8 +234,20 @@ void init(int argc, char **argv)
 void generateObjects()
 {
     // Initialize Game Objects
-    player1 = Spaceship(0,0, 50, 360, 300);
-    arena = Arena(0,0, 16, 9);
-    arena.set_scale(120);
+    player1 = new Spaceship(0,0, 50, 360, 300);
+    arena = new Arena(0,0, 16, 9);
+    arena->set_scale(120);
 
+}
+
+void set_debug_mode()
+{
+    if(debug_mode == true)
+        debug_mode = false;
+    else
+        debug_mode = true;
+    // TODO go through the list of objects that debug mode needs to be set to true/false
+    player1->set_debug_mode(debug_mode);
+    arena->set_debug_mode(debug_mode);
+    
 }

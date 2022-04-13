@@ -40,6 +40,7 @@ class GameObject
         bool get_rotate_left();
         bool get_rotate_right();
         bool get_move_forward();
+        bool get_debug_mode();
 
         Position get_position();
         // Setters
@@ -53,16 +54,20 @@ class GameObject
         void set_rotate_left(bool rotate);
         void set_rotate_right(bool roate);
         void set_move_forward(bool move);
+        void set_debug_mode(bool debug_mode);
 
         void set_position( Position position);
         // Other
         string toString();
         void draw();
+        void debug_draw();
+        // void debug_draw_hitbox();
         void updatePosition();
         void moveForward(double time_elappsed);
         void rotateRight(double time_elappsed);
         void rotateLeft(double time_elappsed);
         void resetMovement();
+        
 
 
         
@@ -83,7 +88,7 @@ class GameObject
         bool rotate_left;
         bool rotate_right;
         bool move_forward;
-
+        bool debug_mode;
         float last_update;
 
         Position position;

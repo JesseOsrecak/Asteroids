@@ -4,16 +4,20 @@
 using namespace std;
 // using namespace glFunctions;
 
-
+bool test_mode = true;
+// for tests
+#include "tests/collission_test.h"
 
 int main(int argc, char **argv)
 {
     
-    // glutFullScreen();
     init(argc, argv);
 
-    
-
+    if(test_mode)
+    {
+        collission_box_test();
+    }
+   
    
     // Is the event processing loop. This is actually the function that makes shit happen and should only ever happen once
     glutMainLoop();

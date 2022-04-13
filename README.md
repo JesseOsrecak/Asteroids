@@ -5,7 +5,14 @@
 ## Controls 
 `ESC` The `ESC` key will exit the game.
 `F11` The `F11` key wil enter and exit fullscreen mode
+`F3` The `F3` ley will enter/exit debug mode
 
+
+## Debug
+x-axis = red
+y-axis = green
+z-axis = blue
+collission box = white
 
 
 ## Make
@@ -82,3 +89,9 @@ Once Compiled to run the game type into terminal:
 
 ### Position.cpp
     Is a simple class to be able to store both X and Y values so that you can return a position from a method.
+
+### CollissionBox.cpp
+    Is a class designed to capture the Collission Box of an object
+
+### collission_test.cpp 
+    Is a temporary class designed to test the functionality of the CollssionBox class
