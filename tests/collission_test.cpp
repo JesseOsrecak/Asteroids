@@ -1,5 +1,5 @@
 #include "collission_test.h"
-
+#include "../helper.h"
 
 void collission_box_test()
 {
@@ -42,12 +42,12 @@ void collission_box_test()
     cout << "Test J: " << print_result(collission_check(base, CollissionBox(0,0,3,1,1))) << " expected: true " << endl;
 
     // Test K
-    // cout << "Test K1: " << print_result(collission_check(base, CollissionBox(,,,,1))) << " expected: false " << endl;
-    // cout << "Test K2: " << print_result(collission_check(base, CollissionBox(,,,,1))) << " expected: false " << endl;
+    cout << "Test K1: " << print_result(collission_check(CollissionBox(3,0,1,1,1), base)) << " expected: false " << endl;
+    cout << "Test K2: " << print_result(collission_check(CollissionBox(-3,0,1,1,1), base)) << " expected: false " << endl;
 
     // Test L
-    // cout << "Test L1: " << print_result(collission_check(base, CollissionBox(,,,,1))) << " expected: false " << endl;
-    // cout << "Test L2: " << print_result(collission_check(base, CollissionBox(,,,,1))) << " expected: false " << endl;
+    cout << "Test L1: " << print_result(collission_check(CollissionBox(0,3,1,1,1), base)) << " expected: false " << endl;
+    cout << "Test L2: " << print_result(collission_check(CollissionBox(0,-3,1,1,1), base)) << " expected: false " << endl;
 
     // Test M
     cout << "Test M1: " << print_result(collission_check(base, CollissionBox(2,-2,2,2,1))) << " expected: true " << endl;
@@ -61,16 +61,14 @@ void collission_box_test()
     // Test P
     cout << "Test P: " << print_result(collission_check(base, CollissionBox(-2,2,2,2,1))) << " expected: true " << endl;
 
+    // Test Q
+    cout << "Test Q: " << print_result(collission_check(base, CollissionBox(1,2,8,1,1))) << " expected: true " << endl;
+
+    // Test R
+    cout << "Test R: " << print_result(collission_check(base, CollissionBox(3,0,1,8,1))) << " expected: true " << endl;
+
 }
 
-bool collission_check(CollissionBox a, CollissionBox b)
-{
-    if (a.in_box(b) == true or b.in_box(a) == true)
-        return true;
-    else
-        return false;
-    return false;
-}
 
 string print_result(bool result)
 {

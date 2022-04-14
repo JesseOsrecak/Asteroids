@@ -65,8 +65,8 @@ void Arena::draw_north()
 void Arena::draw_south()
 {
     glBegin(GL_POLYGON);
-    glColor3f(1,0,0);
-    // glColor3f(1,1,1);
+    // glColor3f(1,0,0);
+    glColor3f(1,1,1);
     glVertex2f(width/2, height/2* -1);
     glVertex2f(width/2, height/2*-1 +0.1);
     glVertex2f(width/2 * -1, height/2*-1 + 0.1);
