@@ -1,4 +1,5 @@
 #include "CollissionBox.h"
+#include "math.h"
 #include <iostream>
 using namespace std;
 // Constructors
@@ -6,19 +7,44 @@ CollissionBox::CollissionBox() : GameObject(0,0)
 {
     this->width = 1;
     this->height = 1;
+
+    north_east = new Position(calculate_new_position(get_east(), get_north(), get_facing(), pythagorean_theorem_find_hypotenuse(get_north(), get_east())));
+    north_west = new Position(calculate_new_position(get_west(), get_north(), get_facing(), pythagorean_theorem_find_hypotenuse(get_north(), get_west())));
+    south_east = new Position(calculate_new_position(get_east(), get_south(), get_facing(), pythagorean_theorem_find_hypotenuse(get_south(), get_east())));
+    south_west = new Position(calculate_new_position(get_west(), get_south(), get_facing(), pythagorean_theorem_find_hypotenuse(get_south(), get_west())));
 }
 
 CollissionBox::CollissionBox(double x, double y): GameObject(x,y)
 {
     this->width = 1;
     this->height = 1;
+    
+    north_east = new Position(calculate_new_position(get_east(), get_north(), get_facing(), pythagorean_theorem_find_hypotenuse(get_north(), get_east())));
+    north_west = new Position(calculate_new_position(get_west(), get_north(), get_facing(), pythagorean_theorem_find_hypotenuse(get_north(), get_west())));
+    south_east = new Position(calculate_new_position(get_east(), get_south(), get_facing(), pythagorean_theorem_find_hypotenuse(get_south(), get_east())));
+    south_west = new Position(calculate_new_position(get_west(), get_south(), get_facing(), pythagorean_theorem_find_hypotenuse(get_south(), get_west())));
 }
 
-
-CollissionBox::CollissionBox(double x, double y, double height, double width) : GameObject(x,y,1,0,0)
+CollissionBox::CollissionBox(double x, double y, double height, double width) : GameObject(x,y,1,0)
 {
     this->width = width;
     this->height = height;
+
+    north_east = new Position(calculate_new_position(get_east(), get_north(), get_facing(), pythagorean_theorem_find_hypotenuse(get_north(), get_east())));
+    north_west = new Position(calculate_new_position(get_west(), get_north(), get_facing(), pythagorean_theorem_find_hypotenuse(get_north(), get_west())));
+    south_east = new Position(calculate_new_position(get_east(), get_south(), get_facing(), pythagorean_theorem_find_hypotenuse(get_south(), get_east())));
+    south_west = new Position(calculate_new_position(get_west(), get_south(), get_facing(), pythagorean_theorem_find_hypotenuse(get_south(), get_west())));
+}
+
+CollissionBox::CollissionBox(double x, double y, double height, double width, double scale, double facing) : GameObject(x,y,scale,facing)
+{
+    this->width = width;
+    this->height = height;
+    this->north_east = new Position(get_north_east());
+    this->north_west = new Position(get_north_west());
+    this->south_east = new Position(get_south_east());
+    this->south_west = new Position(get_south_west());
+    update_position();
 }
 
 CollissionBox::CollissionBox(CollissionBox &copy)  : GameObject(copy)
@@ -58,6 +84,23 @@ double CollissionBox::get_west()
     return get_x() - width/2;
 }
 
+Position CollissionBox::get_north_east()
+{
+    return * north_east;
+}
+Position CollissionBox::get_north_west()
+{
+    return * north_west;
+}
+Position CollissionBox::get_south_east()
+{
+    return * south_east;
+}
+Position CollissionBox::get_south_west()
+{
+    return * south_west;
+}
+
 // Setters
 void CollissionBox::set_height(double height)
 {
@@ -86,8 +129,21 @@ void CollissionBox::draw()
     glEnd();
 }
 
+void CollissionBox::update_position()
+{
+    delete north_east; 
+    north_east = new Position(calculate_new_position(get_east(), get_north(), get_facing(), pythagorean_theorem_find_hypotenuse(get_north(), get_east())));
+    delete north_west;
+    north_west = new Position(calculate_new_position(get_west(), get_north(), get_facing(), pythagorean_theorem_find_hypotenuse(get_north(), get_west())));
+    delete south_east;
+    south_east = new Position(calculate_new_position(get_east(), get_south(), get_facing(), pythagorean_theorem_find_hypotenuse(get_south(), get_east())));
+    delete south_west;
+    south_west = new Position(calculate_new_position(get_west(), get_south(), get_facing(), pythagorean_theorem_find_hypotenuse(get_south(), get_west())));
+}
+
 bool CollissionBox::in_box(CollissionBox &other)
 {
+    
     bool collission = false;
     // Check Vertex
     double other_north = other.get_north();
@@ -100,6 +156,7 @@ bool CollissionBox::in_box(CollissionBox &other)
     Position other_south_east = Position(other_south, other_east);
     Position other_south_west = Position(other_west, other_south);
 
+    
     // Check Entire Object;
     if (other.get_x() >= get_west() && other.get_x() <= get_east() && other.get_y() >= get_south() and other.get_y() <= get_north())
     {
@@ -182,7 +239,6 @@ bool CollissionBox::in_box(CollissionBox &other)
         collission = true;
     }
 
-    
     return collission;
 }
 

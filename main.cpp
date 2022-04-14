@@ -4,7 +4,7 @@
 using namespace std;
 // using namespace glFunctions;
 
-bool test_mode = false;
+bool test_mode = true;
 // for tests
 #include "tests/collission_test.h"
 

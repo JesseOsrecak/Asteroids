@@ -5,6 +5,8 @@
 
 Position calculate_new_position(double x, double y, double angle, double distance);
 
+double pythagorean_theorem_find_hypotenuse(double a, double b);
+
 #define PI 3.14159265
 
 #endif

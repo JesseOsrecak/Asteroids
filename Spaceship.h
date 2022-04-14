@@ -13,7 +13,7 @@ class Spaceship: public GameObject
         Spaceship(Spaceship &copy);
         
 
-        CollissionBox get_collission_box();
+        CollissionBox * get_collission_box();
         double get_north_bounds();
         double get_east_bounds();
         double get_west_bounds();

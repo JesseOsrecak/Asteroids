@@ -17,8 +17,8 @@ Spaceship::Spaceship(double x, double y) : GameObject(x,y)
 
 Spaceship::Spaceship(double x, double y, double scale, double degrees_per_second, double pixels_per_second) : GameObject( x,  y,  scale,  degrees_per_second,  pixels_per_second)
 {
-    north_bounds = 1.0;
-    south_bounds = -0.135;
+    north_bounds = 0.5675;
+    south_bounds = -0.5675;
     east_bounds = 0.25;
     west_bounds = -0.25;
 }
@@ -48,48 +48,48 @@ void Spaceship::draw()
     if(get_debug_mode() == true)
     {
         // Draw Bounding Box
-        debug_draw_hitbox();
+        // debug_draw_hitbox();
+        // get_collission_box().draw();
     }
+
     // Draw Cockpit
     glBegin(GL_POLYGON);
     glColor3f(0.3, 0.1, 0);
-    glVertex2f(0.25, +0.125);
-    glVertex2f(-0.25, +0.125);
-    glVertex2f(-0.125, +0.-0.125);
-    glVertex2f(0.125, +0.-0.125);
+    glVertex2f(0.25, -0.3075);
+    glVertex2f(-0.25, -0.3075);
+    glVertex2f(-0.125, -0.5675);
+    glVertex2f(0.125, -0.5675);
     glEnd();
 
     // Draw Right Wing125
     glBegin(GL_POLYGON);
     glColor3f(0.3, 0.1, 0);
-    glVertex2f(0, +0.125);
-    glVertex2f(0.25, +0.125);
-    glVertex2f(0.25, 1);
+    glVertex2f(0, -0.3075);
+    glVertex2f(0.25, -0.3075);
+    glVertex2f(0.25, 0.5675);
     glEnd();
-
-
 
     // Draw left Wing
     glBegin(GL_POLYGON);
     glColor3f(0.3, 0.1, 0);
-    glVertex2f(-0.25, +0.125);
-    glVertex2f(0, +0.125);
-    glVertex2f(-0.25, 1);
+    glVertex2f(-0.25, -0.3075);
+    glVertex2f(0, -0.3075);
+    glVertex2f(-0.25, 0.5675);
     glEnd();
 
-    // Draw Outline
+        // Draw Outline
     glBegin(GL_LINE_LOOP);
     glColor3f(1, 0, 0);
-    glVertex2f(0.01, +0.135);
-    glVertex2f(-0.24, 1.01);
-    glVertex2f(-0.26, 1.01);
-    glVertex2f(-0.26, 0.115);
-    glVertex2f(-0.135, -0.135);
-    glVertex2f(0.135, -0.135);
-    glVertex2f(0.26, 0.115);
-    glVertex2f(0.26, 1.01);
-    glVertex2f(0.24, 1.01);
-    glVertex2f(-0.01, +0.135);
+    glVertex2f(0.01, -0.2975);
+    glVertex2f(-0.24, 0.5775);
+    glVertex2f(-0.26, 0.5775);
+    glVertex2f(-0.26, -0.3175);
+    glVertex2f(-0.135, -0.5675);
+    glVertex2f(0.135, -0.5675);
+    glVertex2f(0.26, -0.3175);
+    glVertex2f(0.26, 0.5775);
+    glVertex2f(0.24, 0.5775);
+    glVertex2f(-0.01, -0.2975);
     glEnd();
 
 }
@@ -111,7 +111,7 @@ double Spaceship::get_south_bounds()
     return south_bounds;
 }
 
-CollissionBox Spaceship::get_collission_box()
+CollissionBox * Spaceship::get_collission_box()
 {
-    return CollissionBox(get_x(), get_y(), (north_bounds - south_bounds) * get_scale(), (east_bounds - west_bounds) * get_scale());
+    // return new CollissionBox(get_x(), get_y(), (east_bounds - west_bounds), (north_bounds - south_bounds),  get_scale(), get_facing());
 }

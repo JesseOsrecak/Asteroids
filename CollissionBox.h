@@ -10,7 +10,8 @@ class CollissionBox: public GameObject
         // Constructors
         CollissionBox();
         CollissionBox(double x, double y);
-        CollissionBox(double x, double y, double height, double width);
+        CollissionBox(double x, double y,  double width, double height);
+        CollissionBox(double x, double y,  double width, double height, double scale, double facing);
         CollissionBox(CollissionBox &copy);
 
         // Getters
@@ -20,6 +21,12 @@ class CollissionBox: public GameObject
         double get_east();
         double get_south();
         double get_west();
+
+        Position get_north_east();
+        Position get_north_west();
+        Position get_south_east();
+        Position get_south_west();
+
         // Setters
         void set_height(double height);
         void set_width(double width);
@@ -27,8 +34,13 @@ class CollissionBox: public GameObject
         // Other Methods
         void draw();
         bool in_box(CollissionBox &other);
+        void update_position();
     private:
         double width;
         double height;
+        Position * north_east;
+        Position * north_west;
+        Position * south_east;
+        Position * south_west;
 };
 #endif //COLLISSION_BOX_H

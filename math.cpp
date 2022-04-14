@@ -46,3 +46,8 @@ Position calculate_new_position(double x, double y, double angle, double distanc
 
     return new_position;
 }
+
+double pythagorean_theorem_find_hypotenuse(double a, double b)
+{
+    return sqrt(pow(a,2) + pow(b,2));
+}

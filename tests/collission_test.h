@@ -8,7 +8,7 @@
 
 using namespace std;
 void collission_box_test();
-bool collission_check(CollissionBox a, CollissionBox b);
+bool check(bool expected, bool actual);
 string print_result(bool result);
 
 

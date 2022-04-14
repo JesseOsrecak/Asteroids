@@ -2,6 +2,6 @@
 #define HELPER_H
 #include "CollissionBox.h"
 
-bool collission_check(CollissionBox a, CollissionBox b);
+bool collission_check(CollissionBox & a, CollissionBox & b);
 
 #endif //HELPER_H

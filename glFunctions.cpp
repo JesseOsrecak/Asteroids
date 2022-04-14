@@ -21,6 +21,8 @@ void display()
     // glEnable(GL_DEPTH_TEST);
     glEnable(GL_CULL_FACE);
 
+
+
     // CODE GOES HERE
     glPushMatrix();
     arena->draw();
@@ -30,6 +32,15 @@ void display()
     player1->draw();
     glPopMatrix();
 
+    if (debug_mode)
+    {
+        glPushMatrix();
+            // cout << "Player 1: " << endl;
+            player1->get_collission_box()->draw();
+            // cout << "Arena: " <<endl;
+            arena->debug_draw();
+        glPopMatrix();
+    }
     
 
 
@@ -169,6 +180,8 @@ void reshape(int width, int height)
 
     double mult_factor = new_scale / old_scale;
 
+    player1->set_x(player1->get_x()/(16*old_scale) * 16*new_scale );
+    player1->set_y(player1->get_y()/(9*old_scale) * 9 * new_scale);
     player1->set_scale(player1->get_scale() * mult_factor);
 
     res_width = glutGet(GLUT_WINDOW_WIDTH);
@@ -186,6 +199,8 @@ void idle()
     collission_detection();
     player1->updatePosition();
     glutPostRedisplay();
+
+
 }
 
 void init(int argc, char **argv)
@@ -257,11 +272,11 @@ void set_debug_mode()
 int collission_num = 0;
 void collission_detection()
 {
-
+    // cout <<"Collission Detection: " <<endl;
     if(arena->in_collission_box(player1->get_collission_box()) == true)
     {
-        collission_num++;
+        // collission_num++;
         // player1->set_position(Position(0,0));
-        cout << "collision: "<< to_string(collission_num) << endl;
+        // cout << "collision: "<< to_string(collission_num) << endl;
     }
 }

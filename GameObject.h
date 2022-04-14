@@ -25,6 +25,7 @@ class GameObject
 
         GameObject(double x, double y);
         GameObject(double x, double y, double scale, double degrees_per_second, double pixels_per_second);
+        GameObject(double x, double y, double scale, double facing);
         GameObject(GameObject &copy);
         
         // Getters
@@ -49,6 +50,8 @@ class GameObject
         void set_pixels_per_second(double pixels);
         void set_degrees_per_second(double degrees);
         void set_last_update(double time);
+        void set_x(double x);
+        void set_y(double y);
 
 
         void set_rotate_left(bool rotate);

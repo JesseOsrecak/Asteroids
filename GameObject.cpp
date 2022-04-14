@@ -28,6 +28,13 @@ GameObject::GameObject(double x, double y, double scale, double degrees_per_seco
     bool debug_mode = false;
 }
 
+GameObject::GameObject(double x,double y,double scale,double facing)
+{
+    position = Position(x,y);
+    this->scale = scale;
+    this->facing = facing;
+}
+
 GameObject::GameObject(GameObject &copy)
 {
 
@@ -254,5 +261,14 @@ void GameObject::set_debug_mode(bool debug_mode)
 void GameObject::set_position(Position position)
 {
     this->position = position;
+}
+
+void GameObject::set_x(double x)
+{
+    position.set_x(x);
+}
+void GameObject::set_y(double y)
+{
+    position.set_y(y);
 }
 
