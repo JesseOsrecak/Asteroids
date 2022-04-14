@@ -1,4 +1,5 @@
 #include "Arena.h"
+#include "helper.h"
 
 Arena::Arena() : GameObject(0,0)
 {
@@ -96,4 +97,33 @@ void Arena::draw_west()
     glVertex2f(width/2  -0.1, height/2*1);
     glVertex2f(width/2  -0.1, height/2*-1);
     glEnd();
+}
+
+
+bool Arena::in_collission_box(CollissionBox object)
+{
+    bool collission = false;
+    CollissionBox north_collision_box =  CollissionBox(0,height/2 - 0.5, 1, width);
+    CollissionBox south_collision_box = CollissionBox(0, -1*(height/2 -0.5), 1, width);
+    CollissionBox east_collision_box = CollissionBox(width/2 - 0.5, 0, height, 1);
+    CollissionBox west_collision_box = CollissionBox(-1*(width/2 - 0.5), 0, height, 1);
+
+    if (collission_check(object, north_collision_box) == true)
+    {
+        collission = true;
+    }
+    else if (collission_check(object, south_collision_box) == true)
+    {
+        collission = true;
+    }
+    else if (collission_check(object, east_collision_box) == true)
+    {
+        collission = true;
+    }
+    else if (collission_check(object, west_collision_box) == true)
+    {
+        collission = true;
+    }
+
+    return collission;
 }

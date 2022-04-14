@@ -1,6 +1,7 @@
 #ifndef ARENA_H
 #define ARENA_H
 #include "GameObject.h"
+#include "CollissionBox.h"
 
 
 class Arena: public GameObject
@@ -19,9 +20,12 @@ class Arena: public GameObject
         void draw_east();
         void draw_west();
 
+        bool in_collission_box(CollissionBox object);
+
     private:
         double width;
         double height;
+
 
 };
 

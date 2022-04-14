@@ -37,6 +37,8 @@ void generateObjects();
 
 void set_debug_mode();
 
+void collission_detection();
+
 
 
 

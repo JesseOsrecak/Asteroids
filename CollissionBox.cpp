@@ -14,13 +14,8 @@ CollissionBox::CollissionBox(double x, double y): GameObject(x,y)
     this->height = 1;
 }
 
-CollissionBox::CollissionBox(double x, double y, double scale) : GameObject(x,y,scale,0,0)
-{
-    this->width = 1;
-    this->height = 1;
-}
 
-CollissionBox::CollissionBox(double x, double y, double height, double width, double scale) : GameObject(x,y,scale,0,0)
+CollissionBox::CollissionBox(double x, double y, double height, double width) : GameObject(x,y,1,0,0)
 {
     this->width = width;
     this->height = height;

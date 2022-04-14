@@ -1,6 +1,7 @@
 #include "glFunctions.h"
 #include "Spaceship.h"
 #include "Arena.h"
+#include "helper.h"
 #include <iostream>
 
 using namespace std;
@@ -182,6 +183,7 @@ void idle()
 {
 
     // Update All object Positions
+    collission_detection();
     player1->updatePosition();
     glutPostRedisplay();
 }
@@ -252,3 +254,14 @@ void set_debug_mode()
     
 }
 
+int collission_num = 0;
+void collission_detection()
+{
+
+    if(arena->in_collission_box(player1->get_collission_box()) == true)
+    {
+        collission_num++;
+        // player1->set_position(Position(0,0));
+        cout << "collision: "<< to_string(collission_num) << endl;
+    }
+}

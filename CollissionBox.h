@@ -10,8 +10,7 @@ class CollissionBox: public GameObject
         // Constructors
         CollissionBox();
         CollissionBox(double x, double y);
-        CollissionBox(double x, double y, double scale);
-        CollissionBox(double x, double y, double height, double width, double scale);
+        CollissionBox(double x, double y, double height, double width);
         CollissionBox(CollissionBox &copy);
 
         // Getters

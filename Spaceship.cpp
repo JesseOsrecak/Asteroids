@@ -110,3 +110,8 @@ double Spaceship::get_south_bounds()
 {
     return south_bounds;
 }
+
+CollissionBox Spaceship::get_collission_box()
+{
+    return CollissionBox(get_x(), get_y(), (north_bounds - south_bounds) * get_scale(), (east_bounds - west_bounds) * get_scale());
+}
