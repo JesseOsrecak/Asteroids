@@ -3,7 +3,7 @@
 #include "math.h"
 GameObject::GameObject(double x, double y)
 {
-    position = Position(x,y);
+    position = new  Position(x,y);
 
     this->scale = 10;
     this->degrees_per_second = 0;
@@ -18,7 +18,7 @@ GameObject::GameObject(double x, double y, double scale, double degrees_per_seco
 {
     // this->x = x;
     // this->y = y;
-    position = Position(x,y);
+    position = new  Position(x,y);
     this->scale = scale;
     this->degrees_per_second = degrees_per_second;
     this->pixels_per_second = pixels_per_second;
@@ -30,7 +30,7 @@ GameObject::GameObject(double x, double y, double scale, double degrees_per_seco
 
 GameObject::GameObject(double x,double y,double scale,double facing)
 {
-    position = Position(x,y);
+    position = new Position(x,y);
     this->scale = scale;
     this->facing = facing;
 }
@@ -38,7 +38,7 @@ GameObject::GameObject(double x,double y,double scale,double facing)
 GameObject::GameObject(GameObject &copy)
 {
 
-    position = Position(copy.get_x(),copy.get_y());
+    position = new Position(copy.get_x(),copy.get_y());
     this->scale = copy.get_scale();
     this->degrees_per_second = copy.get_degrees_per_second();
     this->pixels_per_second = copy.get_pixels_per_second();
@@ -118,7 +118,7 @@ void GameObject::moveForward(double time_elappsed)
 
     
     double pixels_to_move = pixels_per_second * time_elappsed;
-    position = calculate_new_position(get_x(), get_y(),facing,pixels_to_move);
+    position = new Position(calculate_new_position(get_x(), get_y(),facing,pixels_to_move));
 
     
 }
@@ -156,12 +156,12 @@ void GameObject::resetMovement()
 
 double GameObject::get_x()
 {
-    return position.get_x();
+    return position->get_x();
 }
 
 double GameObject::get_y()
 {
-    return position.get_y();
+    return position->get_y();
 }
 
 double GameObject::get_scale()
@@ -211,7 +211,7 @@ bool GameObject::get_debug_mode()
     return debug_mode;
 }
 
-Position GameObject::get_position()
+Position * GameObject::get_position()
 {   
     return position;
 }
@@ -258,17 +258,17 @@ void GameObject::set_debug_mode(bool debug_mode)
     this->debug_mode = debug_mode;
 }
 
-void GameObject::set_position(Position position)
+void GameObject::set_position(Position * position)
 {
     this->position = position;
 }
 
 void GameObject::set_x(double x)
 {
-    position.set_x(x);
+    position->set_x(x);
 }
 void GameObject::set_y(double y)
 {
-    position.set_y(y);
+    position->set_y(y);
 }
 

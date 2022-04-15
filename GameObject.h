@@ -43,7 +43,7 @@ class GameObject
         bool get_move_forward();
         bool get_debug_mode();
 
-        Position get_position();
+        Position * get_position();
         // Setters
         void set_scale(double scale);
         void set_facing(double facing);
@@ -59,7 +59,7 @@ class GameObject
         void set_move_forward(bool move);
         void set_debug_mode(bool debug_mode);
 
-        void set_position( Position position);
+        void set_position( Position * position);
         // Other
         string toString();
         void draw();
@@ -94,7 +94,7 @@ class GameObject
         bool debug_mode;
         float last_update;
 
-        Position position;
+        Position * position;
 
 };
 

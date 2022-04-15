@@ -38,7 +38,7 @@ void display()
             // cout << "Player 1: " << endl;
             player1->get_collission_box()->draw();
             // cout << "Arena: " <<endl;
-            arena->debug_draw();
+            // arena->debug_draw();
         glPopMatrix();
     }
     

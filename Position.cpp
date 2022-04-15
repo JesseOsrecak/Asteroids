@@ -1,5 +1,5 @@
 #include "Position.h"
-
+#include <cmath>
 Position::Position()
 {
     this->x = 0;
@@ -27,6 +27,21 @@ double Position::get_y()
     return y;
 }
 
+double Position::get_scaled_x(double scale)
+{
+    return x * sqrt(scale);
+    // if (x > 0)
+    //     return x + sqrt(scale);
+    // else if(x < 0)
+    //     return x - sqrt(scale);
+    // return x;
+}
+
+double Position::get_scaled_y(double scale)
+{
+    return y * sqrt(scale);
+    // return y;
+}
 void Position::set_x(double x)
 {
     this->x = x;
@@ -41,4 +56,9 @@ void Position::set_new_position(double x, double y)
 {
     this->x = x;
     this->y = y;
+}
+
+string Position::toString()
+{
+    return  "(" + to_string(x) + ", " +to_string(y) + ")";
 }

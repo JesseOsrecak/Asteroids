@@ -13,6 +13,8 @@ class CollissionBox: public GameObject
         CollissionBox(double x, double y,  double width, double height);
         CollissionBox(double x, double y,  double width, double height, double scale, double facing);
         CollissionBox(CollissionBox &copy);
+        
+        ~CollissionBox();
 
         // Getters
         double get_height();
@@ -22,10 +24,10 @@ class CollissionBox: public GameObject
         double get_south();
         double get_west();
 
-        Position get_north_east();
-        Position get_north_west();
-        Position get_south_east();
-        Position get_south_west();
+        Position * get_north_east();
+        Position * get_north_west();
+        Position * get_south_east();
+        Position * get_south_west();
 
         // Setters
         void set_height(double height);

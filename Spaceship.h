@@ -20,11 +20,13 @@ class Spaceship: public GameObject
         double get_south_bounds();
         void debug_draw_hitbox();
         void draw();
+        void updatePosition();
     private:
         double north_bounds;
         double south_bounds;
         double east_bounds;
         double west_bounds;
+        CollissionBox * collissionBox;
         
 
 };
