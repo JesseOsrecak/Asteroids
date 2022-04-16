@@ -1,5 +1,7 @@
 #include "Arena.h"
 #include "helper.h"
+#include <iostream>
+using namespace std;
 
 Arena::Arena() : GameObject(0,0)
 {
@@ -48,14 +50,16 @@ void Arena::draw()
 
 void Arena::debug_draw()
 {
-    // CollissionBox north_collision_box =  CollissionBox(0,height/2 - 0.5, width, 1, get_scale(), 0);
-    // CollissionBox south_collision_box = CollissionBox(0, -1*(height/2 -0.5), width, 1, get_scale(), 0);
-    // CollissionBox east_collision_box = CollissionBox(width/2 - 0.5, 0, 1,  height, get_scale(), 0);
-    // CollissionBox west_collision_box = CollissionBox(-1*(width/2 - 0.5), 0,  1, height, get_scale(), 0);
-    // north_collision_box.draw();
-    // south_collision_box.draw();
-    // east_collision_box.draw();
-    // west_collision_box.draw();
+
+    CollissionBox north_collision_box =  CollissionBox(0,(height/2) * get_scale() - 5, width, 10/get_scale(), get_scale(), 180);
+    CollissionBox south_collision_box = CollissionBox(0, -1*(height/2)* get_scale() + 5, width, 10/get_scale(), get_scale(), 0);
+    CollissionBox east_collision_box = CollissionBox((width/2)* get_scale() - 5, 0, height,  10/get_scale(), get_scale(), 90);
+    CollissionBox west_collision_box = CollissionBox(-1*((width/2) * get_scale()) + 5, 0, height, 10/get_scale(),  get_scale(), 270);
+
+    north_collision_box.draw();
+    south_collision_box.draw();
+    east_collision_box.draw();
+    west_collision_box.draw();
 
 }
 
@@ -122,27 +126,31 @@ void Arena::draw_west()
 bool Arena::in_collission_box(CollissionBox * object)
 {
     bool collission = false;
-    // CollissionBox north_collision_box =  CollissionBox(0,height/2 - 0.5, width, 1, get_scale(), 0);
-    // CollissionBox south_collision_box = CollissionBox(0, -1*(height/2 -0.5), width, 1, get_scale(), 0);
-    // CollissionBox east_collision_box = CollissionBox(width/2 - 0.5, 0, 1,  height, get_scale(), 0);
-    // CollissionBox west_collision_box = CollissionBox(-1*(width/2 - 0.5), 0,  1, height, get_scale(), 0);
 
-    // if (collission_check(object, north_collision_box) == true)
-    // {
-    //     collission = true;
-    // }
-    // else if (collission_check(object, south_collision_box) == true)
-    // {
-    //     collission = true;
-    // }
-    // else if (collission_check(object, east_collision_box) == true)
-    // {
-    //     collission = true;
-    // }
-    // else if (collission_check(object, west_collision_box) == true)
-    // {
-    //     collission = true;
-    // }
+    CollissionBox north_collision_box =  CollissionBox(0,(height/2) * get_scale() - 5, width, 10/get_scale(), get_scale(), 180);
+    CollissionBox south_collision_box = CollissionBox(0, -1*(height/2)* get_scale() + 5, width, 10/get_scale(), get_scale(), 0);
+    CollissionBox east_collision_box = CollissionBox((width/2)* get_scale() - 5, 0, height,  10/get_scale(), get_scale(), 90);
+    CollissionBox west_collision_box = CollissionBox(-1*((width/2) * get_scale()) + 5, 0, height, 10/get_scale(),  get_scale(), 270);
+    if (collission_check(north_collision_box, *object ) == true)
+    {
+        
+        collission = true;
+    }
+    if (collission_check( south_collision_box, *object) == true)
+    {
+        
+        collission = true;
+    }
+    if (collission_check( east_collision_box,*object) == true)
+    {
+        
+        collission = true;
+    }
+    if (collission_check( west_collision_box, *object) == true)
+    {
+        
+        collission = true;
+    }
 
     return collission;
 }

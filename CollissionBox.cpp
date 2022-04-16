@@ -5,8 +5,8 @@ using namespace std;
 // Constructors
 CollissionBox::CollissionBox() : GameObject(0,0)
 {
-    this->width = 1;
-    this->height = 1;
+    this->width = 1* get_scale();
+    this->height = 1* get_scale();
 
     north_east = new Position();
     north_west = new Position();
@@ -17,8 +17,8 @@ CollissionBox::CollissionBox() : GameObject(0,0)
 
 CollissionBox::CollissionBox(double x, double y): GameObject(x,y)
 {
-    this->width = 1;
-    this->height = 1;
+    this->width = 1* get_scale();
+    this->height = 1* get_scale();
     
     north_east = new Position();
     north_west = new Position();
@@ -29,8 +29,8 @@ CollissionBox::CollissionBox(double x, double y): GameObject(x,y)
 
 CollissionBox::CollissionBox(double x, double y, double width, double height) : GameObject(x,y,1,0)
 {
-    this->width = width;
-    this->height = height;
+    this->width = width* get_scale();
+    this->height = height* get_scale();
 
     north_east = new Position();
     north_west = new Position();
@@ -148,11 +148,15 @@ void CollissionBox::draw()
     glVertex2f(south_east->get_x(), south_east->get_y());
 
     glEnd();
+
+    glBegin(GL_POINTS);
+    glVertex2f(get_x(), get_y());
+    glEnd();
 }
 
 void CollissionBox::update_position()
 {
-    
+    // set_facing(45);
     north_east->set_x(get_east());
     north_east->set_y(get_north());
 
@@ -164,9 +168,7 @@ void CollissionBox::update_position()
 
     south_east->set_x(get_east());
     south_east->set_y(get_south());
-    cout<<"UPDATE"<<endl<<endl;
-    cout<<north_west->toString()<<north_east->toString()<<endl<<south_west->toString()<<south_east->toString()<<endl;
-
+    
     double h = height /2;
     double w = width /2 ;
     // Quadrant 1
@@ -174,10 +176,14 @@ void CollissionBox::update_position()
     {
         double feta = get_facing();
         double beta = 90 - feta;
-        Position p = Position(h*sin(feta) * -1 + get_x(), h*cos(feta) + get_y());
+
+        feta = to_radians(feta);
+        beta = to_radians(beta);
+        Position p = Position(-h*sin(feta) + get_x(), h*cos(feta) + get_y());
+
         // North East
-        north_east->set_x(w*cos(beta)+p.get_x());
-        north_east->set_y(w*sin(beta)+p.get_y());
+        north_east->set_x(w*sin(beta)+p.get_x());
+        north_east->set_y(w*cos(beta)+p.get_y());
         // North West
         north_west->set_x(-1*width*sin(beta)+north_east->get_x());
         north_west->set_y(-1*width*cos(beta)+north_east->get_y());
@@ -194,13 +200,17 @@ void CollissionBox::update_position()
     {
         double feta= get_facing() - 90;
         double beta = 90 - feta;
+
+        feta = to_radians(feta);
+        beta = to_radians(beta);
         Position p = Position(-1*h*cos(feta) + get_x(), -1 * h * sin(feta) + get_y());
+
         // North East
         north_east->set_x(-1*w*cos(beta)+p.get_x());
         north_east->set_y(w*sin(beta)+p.get_y());
         // North West
-        north_west->set_x(-1*width*sin(beta)+north_east->get_x());
-        north_west->set_y(-1*width*cos(beta)+north_east->get_y());
+        north_west->set_x(width*cos(beta)+north_east->get_x());
+        north_west->set_y(-1*width*sin(beta)+north_east->get_y());
         // Sout East
         south_east->set_x(height*cos(feta)+north_east->get_x());
         south_east->set_y(height*sin(feta)+north_east->get_y());
@@ -213,9 +223,13 @@ void CollissionBox::update_position()
     {
         double feta= get_facing() - 180;
         double beta = 90 - feta;
-        Position p = Position(-1*h*sin(feta)+get_x(), -1*h*cos(feta)+get_y());
+
+        feta = to_radians(feta);
+        beta = to_radians(beta);
+        Position p = Position(h*sin(feta)+get_x(), -1*h*cos(feta)+get_y());
+
         // North East
-        north_east->set_x(-1*w*sin(beta)+p.get_x());
+        north_east->set_x(-1* w*sin(beta)+p.get_x());
         north_east->set_y(-1*w*cos(beta)+p.get_y());
         // North West
         north_west->set_x(width*sin(beta)+north_east->get_x());
@@ -231,13 +245,17 @@ void CollissionBox::update_position()
     {
         double feta= get_facing() - 270;
         double beta = 90 - feta;
-        Position p = Position(h*cos(feta), h*sin(feta));
+
+        feta = to_radians(feta);
+        beta = to_radians(beta);
+        Position p = Position(h*cos(feta) + get_x(), h*sin(feta) + get_y());
+
         // North East
-        north_east->set_x(-1*w*sin(beta)+p.get_x());
-        north_east->set_y(w*cos(beta)+p.get_y());
+        north_east->set_x(w*cos(beta)+p.get_x());
+        north_east->set_y(-w*sin(beta)+p.get_y());
         // North West
-        north_west->set_x(-1*width*sin(beta)+north_east->get_x());
-        north_west->set_y(width*cos(beta)+north_east->get_y());
+        north_west->set_x(-width*cos(beta)+north_east->get_x());
+        north_west->set_y(width*sin(beta)+north_east->get_y());
         // Sout East
         south_east->set_x(-1*height*cos(feta)+north_east->get_x());
         south_east->set_y(-1*height*sin(feta)+north_east->get_y());
@@ -246,13 +264,16 @@ void CollissionBox::update_position()
         south_west->set_y(-1*height*sin(feta)+north_west->get_y());
     }
 
-    cout<<north_west->toString()<<north_east->toString()<<endl<<south_west->toString()<<south_east->toString()<<endl<<endl;
+    
 
 }
 
 bool CollissionBox::in_box(CollissionBox &other)
 {
-    
+    double north;
+    double south;
+    double east;
+    double west;
     bool collission = false;
     // Check Vertex
     double other_north = other.get_north();
@@ -265,88 +286,54 @@ bool CollissionBox::in_box(CollissionBox &other)
     Position * other_south_east = other.get_south_east();
     Position * other_south_west = other.get_south_west();
 
-    
+    if (get_facing()  == 0 || get_facing() == 180)
+    {
+        north = get_y() + height/2;
+        south = get_y() - height/2;
+        east  = get_x() + width/2;
+        west  = get_x() - width/2;
+    }
+    else
+    {
+        north = get_y() + width/2;
+        south = get_y() - width/2;
+        east  = get_x() + height/2;
+        west  = get_x() - height/2;
+    }
+  
     // Check Entire Object;
-    if (other.get_x() >= get_west() && other.get_x() <= get_east() && other.get_y() >= get_south() and other.get_y() <= get_north())
+    if (other.get_x() >= west && other.get_x() <= east && other.get_y() >= south and other.get_y() <= north)
     {
         collission = true;
     }
-
+    
     // Check Verticies
     // Check Noth East
     
-    else if (other_north_east->get_x() >= get_west() && other_north_east->get_x() <= get_east() && other_north_east->get_y() >= get_south() and other_north_east->get_y() <= get_north())
+    else if (other_north_east->get_x() >= west && other_north_east->get_x() <= east && other_north_east->get_y() >= south and other_north_east->get_y() <= north)
     {
         collission = true;
     }
 
     // Check North West
     
-    else if (other_north_west->get_x() >= get_west() && other_north_west->get_x() <= get_east() && other_north_west->get_y() >= get_south() and other_north_west->get_y() <= get_north())
+    else if (other_north_west->get_x() >= west&& other_north_west->get_x() <=east  && other_north_west->get_y() >= south and other_north_west->get_y() <= north)
     {
         collission = true;
     }
     // Check South East
     
-    else if (other_south_east->get_x() >= get_west() && other_south_east->get_x() <= get_east() && other_south_east->get_y() >= get_south() and other_south_east->get_y() <= get_north())
+    else if (other_south_east->get_x() >= west && other_south_east->get_x() <= east  && other_south_east->get_y() >= south and other_south_east->get_y() <= north)
     {
         collission = true;
     }
     // Check South West
     
-    else if (other_south_west->get_x() >= get_west() && other_south_west->get_x() <= get_east() && other_south_west->get_y() >= get_south() and other_south_west->get_y() <= get_north())
+    else if (other_south_west->get_x() >= west && other_south_west->get_x() <= east  && other_south_west->get_y() >= south and other_south_west->get_y() <= north)
     {
         collission = true;
     }
-    // Check Line Intersections
-    else if (other_west <= get_east() && get_east() <= other_east && get_south() <= other_north && other_north <= get_north() )
-    {
-        // Collission with top other line and left current line
-        // cout << "TOP, LEFT " << endl;
-        collission = true;
-    }
-    else if (other_west <= get_west() && get_west() <= other_east  && get_south() <= other_north && other_north <= get_north())
-    {
-        // Collission with top other line and right current line
-        // cout<< "TOP, RIGHT" << endl;
-        collission = true;
-    }
-    else if (other_west <= get_east() && get_east() <= other_east && get_south() <= other_south && other_south <= get_north())
-    {
-        // Collission with bottom other line and left current line
-        // cout<< "BOTTOM, LEFT" << endl;
-        collission = true;
-    }
-    else if (other_west <= get_west() && get_west() <= other_east && get_south() <= other_south && other_south <+ get_north())
-    {
-        // Collission with bottom other line and right current line
-        // cout<< "BOTTOM, RIGHT" << endl;
-        collission = true;
-    }
-    else if (other_south <= get_north() && get_north() <= other_north && get_west() <= other_west && other_west <= get_east())
-    {
-        // Collission with right other line and top currnt line
-        // cout << "RIGHT, TOP" <<endl;
-        collission = true;
-    }
-    else if (other_south <= get_south() && get_south() <= other_north && get_west() <= other_west && other_west <= get_east())
-    {
-        // Collission with right other line and bottom current line
-        // cout << "RIGHT, BOTTOM" <<endl;
-        collission = true;
-    }
-    else if (other_south <= get_north() && get_north() <= other_north && get_west() <= other_east && other_east <= get_east())
-    {
-        // Collisson with left other line and top current line
-        // cout << "LEFT, TOP" <<endl;
-        collission = true;
-    }
-    else if (other_south <= get_south() && get_south() <= other_north && get_west() <= other_east && other_east <= get_east())
-    {
-        // Collission with left other line and bottom current line
-        // cout << "LEFT, BOTTOM" <<endl;
-        collission = true;
-    }
+
 
     return collission;
 }

@@ -53,6 +53,15 @@ double pythagorean_theorem_find_hypotenuse(double a, double b)
     return sqrt(pow(a,2) + pow(b,2));
 }
 
+double to_radians(double angle)
+{
+    return angle/180 * PI;
+}
+
+double to_degrees(double angle)
+{
+    return angle/PI * 180;
+}
 // Position apply_scale(Position * origin, Position * point, double scale)
 // {
 

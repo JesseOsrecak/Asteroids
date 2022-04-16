@@ -38,7 +38,7 @@ void display()
             // cout << "Player 1: " << endl;
             player1->get_collission_box()->draw();
             // cout << "Arena: " <<endl;
-            // arena->debug_draw();
+            arena->debug_draw();
         glPopMatrix();
     }
     
@@ -276,7 +276,8 @@ void collission_detection()
     if(arena->in_collission_box(player1->get_collission_box()) == true)
     {
         // collission_num++;
-        // player1->set_position(Position(0,0));
+        player1->set_x(0);
+        player1->set_y(0);
         // cout << "collision: "<< to_string(collission_num) << endl;
     }
 }

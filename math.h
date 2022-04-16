@@ -7,6 +7,9 @@ Position calculate_new_position(double x, double y, double angle, double distanc
 
 double pythagorean_theorem_find_hypotenuse(double a, double b);
 
+double to_radians(double angle);
+
+double to_degrees(double angle);
 // Position apply_scale(Position * origin, Position * point, double scale);
 #define PI 3.14159265
 
