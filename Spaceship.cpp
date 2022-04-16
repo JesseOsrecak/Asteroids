@@ -9,6 +9,7 @@ Spaceship::Spaceship() : GameObject(0,0)
     east_bounds = 0.25;
     west_bounds = -0.25;
     collissionBox = new CollissionBox(get_x(),get_y(), (east_bounds - west_bounds), (north_bounds - south_bounds), get_scale(), get_facing());
+    gun = new Gun();
 }
 
 Spaceship::Spaceship(double x, double y) : GameObject(x,y)
@@ -19,6 +20,7 @@ Spaceship::Spaceship(double x, double y) : GameObject(x,y)
     west_bounds = -0.25;
 
     collissionBox = new CollissionBox(x,y, (east_bounds - west_bounds), (north_bounds - south_bounds), get_scale(), get_facing());
+    gun = new Gun(x,y);
 }
 
 Spaceship::Spaceship(double x, double y, double scale, double degrees_per_second, double pixels_per_second) : GameObject( x,  y,  scale,  degrees_per_second,  pixels_per_second)
@@ -28,7 +30,9 @@ Spaceship::Spaceship(double x, double y, double scale, double degrees_per_second
     east_bounds = 0.25;
     west_bounds = -0.25;
     collissionBox = new CollissionBox(x,y, (east_bounds - west_bounds), (north_bounds - south_bounds), get_scale(), get_facing());
+    gun = new Gun(x,y,scale,get_facing());
 }
+
 Spaceship::Spaceship(Spaceship &copy) : GameObject(copy)
 {
     this->north_bounds = copy.get_north_bounds();
@@ -36,6 +40,7 @@ Spaceship::Spaceship(Spaceship &copy) : GameObject(copy)
     this->east_bounds = copy.get_east_bounds();
     this->west_bounds = copy.get_west_bounds();
     collissionBox = get_collission_box();
+    this->gun = new Gun(*copy.get_gun());
 }
 
 void Spaceship::debug_draw_hitbox()
@@ -59,6 +64,7 @@ void Spaceship::draw()
         // debug_draw_hitbox();
         // get_collission_box().draw();
     }
+    gun->draw();
 
     // Draw Cockpit
     glBegin(GL_POLYGON);
@@ -86,19 +92,21 @@ void Spaceship::draw()
     glEnd();
 
         // Draw Outline
-    // glBegin(GL_LINE_LOOP);
-    // glColor3f(1, 0, 0);
-    // glVertex2f(0.01, -0.2975);
-    // glVertex2f(-0.24, 0.5775);
-    // glVertex2f(-0.26, 0.5775);
-    // glVertex2f(-0.26, -0.3175);
-    // glVertex2f(-0.135, -0.5675);
-    // glVertex2f(0.135, -0.5675);
-    // glVertex2f(0.26, -0.3175);
-    // glVertex2f(0.26, 0.5775);
-    // glVertex2f(0.24, 0.5775);
-    // glVertex2f(-0.01, -0.2975);
-    // glEnd();
+    glBegin(GL_LINE_LOOP);
+    glColor3f(1, 0, 0);
+    glVertex2f(0.01, -0.2975);
+    glVertex2f(-0.24, 0.5775);
+    glVertex2f(-0.26, 0.5775);
+    glVertex2f(-0.26, -0.3175);
+    glVertex2f(-0.135, -0.5675);
+    glVertex2f(0.135, -0.5675);
+    glVertex2f(0.26, -0.3175);
+    glVertex2f(0.26, 0.5775);
+    glVertex2f(0.24, 0.5775);
+    glVertex2f(-0.01, -0.2975);
+    glEnd();
+
+    
 
 }
 
@@ -113,6 +121,12 @@ void Spaceship::updatePosition()
     collissionBox->set_width(east_bounds - west_bounds);
     collissionBox->set_height(north_bounds - south_bounds);
     
+    gun->set_facing(get_facing());
+    gun->set_scale(get_scale());
+    gun->set_x(get_x());
+    gun->set_y(get_y());
+
+    gun->update();
 
     collissionBox->update_position();
 }
@@ -136,4 +150,31 @@ double Spaceship::get_south_bounds()
 CollissionBox * Spaceship::get_collission_box()
 {
     return collissionBox;
+}
+
+Gun *  Spaceship::get_gun()
+{
+    return gun;
+}
+
+bool Spaceship::get_trigger_down()
+{
+    return gun->get_trigger_down();
+}
+
+void Spaceship::set_trigger_down(bool trigger)
+{
+    gun->set_trigger_down(trigger);
+}
+
+void Spaceship::set_facing(double facing)
+{
+    GameObject::set_facing(facing);
+    gun->set_facing(facing);
+}
+
+void Spaceship::set_scale(double scale)
+{
+    GameObject::set_scale(scale);
+    gun->set_scale(scale);
 }

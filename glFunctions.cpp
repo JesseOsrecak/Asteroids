@@ -160,6 +160,29 @@ void keyboardSpecial(int key, int x, int y)
     }
 }
 
+void mouse_function(int button, int state, int x, int y)
+{
+    switch (button)
+    {
+        case GLUT_LEFT_BUTTON:
+            
+            if(state == GLUT_DOWN)
+            {
+                cout << "MOUSE DOWN" <<endl;
+                player1->set_trigger_down(true);
+            }
+            else
+            {
+                cout << "MOUSE UP" <<endl;
+                player1->set_trigger_down(false);
+            }
+            break;
+        default:
+            break;
+    }
+
+}
+
 void reshape(int width, int height)
 {
     glViewport(0, 0, width, height);
@@ -167,6 +190,7 @@ void reshape(int width, int height)
     glMatrixMode(GL_PROJECTION);
     glLoadIdentity();
     glOrtho(width/2*-1, width/2, height/2*-1, height/2, -1.0, 1.0);
+    // glOrtho(16*new_scale/2*-1, 16*new_scale/2,9*new_scale/2*-1, 9*new_scale/2, -1.0, 1.0);
 
     double old_scale = arena->get_scale();
     double new_scale = width/16;
@@ -240,6 +264,8 @@ void init(int argc, char **argv)
     glutSpecialFunc(keyboardSpecial);
 
     glutIdleFunc(idle);
+
+    glutMouseFunc(mouse_function);
 
     generateObjects();
 

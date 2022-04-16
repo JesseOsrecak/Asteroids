@@ -27,6 +27,7 @@ class GameObject
         GameObject(double x, double y, double scale, double degrees_per_second, double pixels_per_second);
         GameObject(double x, double y, double scale, double facing);
         GameObject(GameObject &copy);
+        // ~GameObject();
         
         // Getters
         double get_scale();

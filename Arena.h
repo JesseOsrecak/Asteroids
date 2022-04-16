@@ -22,11 +22,15 @@ class Arena: public GameObject
         void draw_west();
 
         bool in_collission_box(CollissionBox * object);
+        void isClose(CollissionBox * object);
 
     private:
         double width;
         double height;
-
+        bool close_north;
+        bool close_east;
+        bool close_south;
+        bool close_west;
 
 };
 

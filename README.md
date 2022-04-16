@@ -91,7 +91,15 @@ Once Compiled to run the game type into terminal:
     Is a simple class to be able to store both X and Y values so that you can return a position from a method.
 
 ### CollissionBox.cpp
-    Is a class designed to capture the Collission Box of an object
+    Is a class designed to capture the Collission Box of an object. Is a child Clas of Game Object
 
 ### collission_test.cpp 
     Is a temporary class designed to test the functionality of the CollssionBox class
+
+### Bullet.cpp
+    Is a class that houses all bullet Data Is a Child Class of Game Object
+
+### Gun.cpp
+    Is a class that houses all Gun Data Is a child class of Game Object
+
+### Vector.cpp

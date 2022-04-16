@@ -39,7 +39,7 @@ void set_debug_mode();
 
 void collission_detection();
 
-
+void mouse_function(int button, int state, int x, int y);
 
 
 #endif  // GL_FUNCTIONS_H
