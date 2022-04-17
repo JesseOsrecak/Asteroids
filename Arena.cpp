@@ -173,7 +173,7 @@ void Arena::draw_east()
 bool Arena::in_collission_box(CollissionBox * object)
 {
     bool collission = false;
-    isClose(object);
+    
     CollissionBox north_collision_box =  CollissionBox(0,(height/2) * get_scale() - 5, width, 10/get_scale(), get_scale(), 180);
     CollissionBox south_collision_box = CollissionBox(0, -1*(height/2)* get_scale() + 5, width, 10/get_scale(), get_scale(), 0);
     CollissionBox east_collision_box = CollissionBox((width/2)* get_scale() - 5, 0, height,  10/get_scale(), get_scale(), 90);

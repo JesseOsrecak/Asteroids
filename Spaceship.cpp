@@ -178,3 +178,18 @@ void Spaceship::set_scale(double scale)
     GameObject::set_scale(scale);
     gun->set_scale(scale);
 }
+
+vector<Bullet * > Spaceship::get_bullets()
+{
+    return gun->get_bullets();
+}
+
+void Spaceship::draw_bullets()
+{
+    gun->draw_bullets();
+}
+
+void Spaceship::delete_bullets(vector<int> delete_list)
+{
+    gun->delete_bullets(delete_list);
+}

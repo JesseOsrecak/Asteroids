@@ -55,8 +55,8 @@ Gun::~Gun()
     //     delete bullets[i];
     // }
 
-    bullets->clear();
-    delete bullets;
+    bullets.clear();
+    // delete bullets;
 }
 
 void Gun::draw()
@@ -84,10 +84,11 @@ void Gun::update()
 
     // Update Position on all bullets
 
-    // for(Bullet * bullet : *bullets)
-    // {
-    //     bullet->updatePosition();
-    // }
+    for(Bullet * bullet : bullets)
+    {
+
+        bullet->updatePosition();
+    }
 
     if (current_time - last_shot >= rate_of_fire and trigger_down == true) 
     {
@@ -97,14 +98,23 @@ void Gun::update()
 
 }    
 
-// TODO
 void Gun::shoot()
 {
     // SPAWN in bullet and fire shot
-    cout<<"SHOT"<<endl;
     Position location = get_head();
-    bullets->push_back(new Bullet(location.get_x(), location.get_y(),get_scale(), get_facing()));
-    cout << "POST"<<endl;
+    Bullet * bullet = new Bullet(location.get_x(), location.get_y(),get_scale(), get_facing());
+    bullet->set_move_forward(true);
+    
+    bullets.push_back(bullet);
+}
+
+void Gun::draw_bullets()
+{
+    for(Bullet * bullet : bullets)
+    {
+        
+            bullet->draw();
+    }
 }
 
 double Gun::get_north_bounds()
@@ -152,6 +162,11 @@ Position Gun::get_head()
     return calculate_new_position(get_x(),get_y(), get_facing(), north_bounds );
 }
 
+vector<Bullet * > Gun::get_bullets()
+{
+    return bullets;
+}
+
 bool Gun::get_trigger_down()
 {
     return trigger_down;
@@ -160,4 +175,12 @@ bool Gun::get_trigger_down()
 void Gun::set_trigger_down(bool trigger)
 {
     this->trigger_down = trigger;
+}
+
+void Gun::delete_bullets(vector<int> delete_list)
+{
+    for(int i = delete_list.size() - 1; i >= 0; i--)
+    {
+        bullets.erase(bullets.begin() + delete_list[i] );
+    }
 }

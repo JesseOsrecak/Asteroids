@@ -21,6 +21,8 @@ class Spaceship: public GameObject
         double get_west_bounds();
         double get_south_bounds();
         bool get_trigger_down();
+        vector<Bullet * > get_bullets();
+        
 
         void set_trigger_down(bool trigger);
         void set_facing(double facing);
@@ -29,8 +31,11 @@ class Spaceship: public GameObject
 
         void debug_draw_hitbox();
         void draw();
+        void draw_bullets();
         void updatePosition();
         void shoot();
+        void delete_bullets(vector<int> delete_list);
+
     private:
         double north_bounds;
         double south_bounds;

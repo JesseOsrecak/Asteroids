@@ -272,3 +272,8 @@ void GameObject::set_y(double y)
     position->set_y(y);
 }
 
+void GameObject::set_last_update(double last_update)
+{
+    this->last_update = last_update;
+}
+

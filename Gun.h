@@ -4,6 +4,7 @@
 #include "GameObject.h"
 #include "Bullet.h"
 #include <vector>
+#include <list>
 
 class Gun: public GameObject
 {
@@ -20,6 +21,9 @@ class Gun: public GameObject
         void draw();
         void shoot();
         void update();
+        void draw_bullets();
+        void delete_bullets(vector<int> delete_list);
+        
 
         // Getters
         double get_north_bounds();
@@ -28,6 +32,7 @@ class Gun: public GameObject
         double get_west_bounds();
         Position get_head();
         bool get_trigger_down();
+        vector<Bullet * > get_bullets();
 
         // Setters
         void set_north_bounds(double north_bounds);
@@ -35,6 +40,7 @@ class Gun: public GameObject
         void set_east_bounds(double east_bounds);
         void set_west_bounds(double west_bounds);
         void set_trigger_down(bool trigger);
+        
 
     private:
         double north_bounds;
@@ -44,7 +50,7 @@ class Gun: public GameObject
         double rate_of_fire;
         bool trigger_down;
         float last_shot;
-        vector<Bullet * > * bullets;
+        vector<Bullet * >  bullets;
         int num_of_active;
 
 };

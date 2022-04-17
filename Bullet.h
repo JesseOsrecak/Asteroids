@@ -14,7 +14,7 @@ class Bullet: public GameObject
         ~Bullet();
 
         void draw();
-        void update_position();
+        void updatePosition();
 
 
         // Getters
@@ -22,7 +22,10 @@ class Bullet: public GameObject
 
     private:
         CollissionBox * collissionBox;
-        
+        double north_bounds;
+        double south_bounds;
+        double east_bounds;
+        double west_bounds;
 };
 
 #endif //BULLET_H

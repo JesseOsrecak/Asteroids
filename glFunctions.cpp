@@ -31,6 +31,8 @@ void display()
     glPushMatrix();
     player1->draw();
     glPopMatrix();
+    
+    player1->draw_bullets();
 
     if (debug_mode)
     {
@@ -39,6 +41,11 @@ void display()
             player1->get_collission_box()->draw();
             // cout << "Arena: " <<endl;
             arena->debug_draw();
+            vector<Bullet *> bullets = player1->get_bullets();
+            for (Bullet * bullet : bullets)
+            {
+                bullet->get_collission_box()->draw();
+            }
         glPopMatrix();
     }
     
@@ -168,12 +175,10 @@ void mouse_function(int button, int state, int x, int y)
             
             if(state == GLUT_DOWN)
             {
-                cout << "MOUSE DOWN" <<endl;
                 player1->set_trigger_down(true);
             }
             else
             {
-                cout << "MOUSE UP" <<endl;
                 player1->set_trigger_down(false);
             }
             break;
@@ -221,6 +226,7 @@ void idle()
 
     // Update All object Positions
     collission_detection();
+    
     player1->updatePosition();
     glutPostRedisplay();
 
@@ -298,7 +304,8 @@ void set_debug_mode()
 int collission_num = 0;
 void collission_detection()
 {
-    // cout <<"Collission Detection: " <<endl;
+    arena->isClose(player1->get_collission_box());
+
     if(arena->in_collission_box(player1->get_collission_box()) == true)
     {
         // collission_num++;
@@ -306,4 +313,23 @@ void collission_detection()
         player1->set_y(0);
         // cout << "collision: "<< to_string(collission_num) << endl;
     }
+
+    vector<Bullet * > bullets  = player1->get_bullets();
+    vector<int> delete_list;
+    int index = 0;
+    for (Bullet * bullet : bullets)
+    {
+        if ( arena->in_collission_box(bullet->get_collission_box()))
+        {
+            // remove bullet;
+            delete_list.insert(delete_list.begin(), index);
+        }
+        index++;
+    }
+    
+    player1->delete_bullets(delete_list);
+
+    
+
+
 }
