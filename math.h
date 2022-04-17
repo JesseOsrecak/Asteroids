@@ -10,6 +10,8 @@ double pythagorean_theorem_find_hypotenuse(double a, double b);
 double to_radians(double angle);
 
 double to_degrees(double angle);
+
+double get_angle_from_2_positions(Position & origin, Position & destination);
 // Position apply_scale(Position * origin, Position * point, double scale);
 #define PI 3.14159265
 

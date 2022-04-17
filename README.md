@@ -102,4 +102,7 @@ Once Compiled to run the game type into terminal:
 ### Gun.cpp
     Is a class that houses all Gun Data Is a child class of Game Object
 
+### AsteroidLaunchArea.cpp
+    Is a class that defines the area an asteroid can be spawned in.
+
 ### Vector.cpp

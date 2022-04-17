@@ -41,6 +41,9 @@ void collission_detection();
 
 void mouse_function(int button, int state, int x, int y);
 
+void spawn_asteroid();
+
+void spawn_asteroid_wave();
 
 #endif  // GL_FUNCTIONS_H
 

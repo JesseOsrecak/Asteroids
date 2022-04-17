@@ -62,6 +62,49 @@ double to_degrees(double angle)
 {
     return angle/PI * 180;
 }
+
+double get_angle_from_2_positions(Position & origin, Position & destination)
+{
+    // Translate to 0,0
+    Position translated_destination = Position(destination.get_x() - origin.get_x(), destination.get_y() - origin.get_y());
+    double x = translated_destination.get_x();
+    double y = translated_destination.get_y();
+    int quadrant = 0;
+    if(x <= 0 and y > 0)
+    {
+        quadrant = 1;
+    }
+    else if(x <=0 and y <= 0)
+    {
+        quadrant = 2;
+    }
+    else if (x > 0 and y < 0 )
+    {
+        quadrant = 3;
+    }
+    else if (x >=0 and y >=0)
+    {
+        quadrant = 4;
+    }
+
+    double angle = atan(abs(x/y))*180/PI;
+    if (quadrant == 2)
+    {
+        angle = angle + 90;
+    }
+    else if(quadrant == 3)
+    {
+        angle += 180;
+    }
+    else if(quadrant == 4)
+    {
+        angle += 270;
+    }
+
+    return angle;
+
+
+}
 // Position apply_scale(Position * origin, Position * point, double scale)
 // {
 

@@ -2,12 +2,17 @@
 #include "Spaceship.h"
 #include "Arena.h"
 #include "helper.h"
+#include "AsteroidLaunchArea.h"
+#include "Asteroid.h"
+#include "math.h"
 #include <iostream>
 
 using namespace std;
 
 Spaceship *player1;
 Arena *arena;
+AsteroidLaunchArea * asteroidLaunchArea;
+vector<Asteroid * >  asteroids;
 bool fullscreen = true;
 
 double res_width = 1280;
@@ -33,6 +38,11 @@ void display()
     glPopMatrix();
     
     player1->draw_bullets();
+
+    for(Asteroid * asteroid : asteroids)
+    {
+        asteroid->draw();
+    }
 
     if (debug_mode)
     {
@@ -206,12 +216,20 @@ void reshape(int width, int height)
     }
 
     arena->set_scale(new_scale);
-
+    asteroidLaunchArea->set_scale(new_scale);
     double mult_factor = new_scale / old_scale;
 
     player1->set_x(player1->get_x()/(16*old_scale) * 16*new_scale );
     player1->set_y(player1->get_y()/(9*old_scale) * 9 * new_scale);
     player1->set_scale(player1->get_scale() * mult_factor);
+
+    for(Asteroid * asteroid : asteroids)
+    {
+        asteroid->set_x(asteroid->get_x()/(16*old_scale) * 16*new_scale );
+        asteroid->set_y(asteroid->get_y()/(9*old_scale) * 9 * new_scale);
+        asteroid->set_scale(asteroid->get_scale() * mult_factor);
+
+    }
 
     res_width = glutGet(GLUT_WINDOW_WIDTH);
     res_height = glutGet(GLUT_WINDOW_HEIGHT);
@@ -228,6 +246,15 @@ void idle()
     collission_detection();
     
     player1->updatePosition();
+    for(Asteroid * asteroid : asteroids)
+    {
+        asteroid->updatePosition();
+    }
+
+    if (asteroids.size() <= 3)
+    {
+        spawn_asteroid_wave();
+    }
     glutPostRedisplay();
 
 
@@ -285,7 +312,9 @@ void generateObjects()
     // Initialize Game Objects
     player1 = new Spaceship(0,0, 50, 360, 300);
     arena = new Arena(0,0, 16, 9);
+    asteroidLaunchArea = new AsteroidLaunchArea(20, 120);
     arena->set_scale(120);
+    spawn_asteroid_wave();
 
 }
 
@@ -304,6 +333,7 @@ void set_debug_mode()
 int collission_num = 0;
 void collission_detection()
 {
+    
     arena->isClose(player1->get_collission_box());
 
     if(arena->in_collission_box(player1->get_collission_box()) == true)
@@ -315,21 +345,91 @@ void collission_detection()
     }
 
     vector<Bullet * > bullets  = player1->get_bullets();
-    vector<int> delete_list;
-    int index = 0;
+    vector<int> delete_list_asteroid;
+    vector<int> delete_list_bullet;
+    int index_bullet = 0;
+    int index_asteroid = 0;
     for (Bullet * bullet : bullets)
     {
         if ( arena->in_collission_box(bullet->get_collission_box()))
         {
             // remove bullet;
-            delete_list.insert(delete_list.begin(), index);
+            delete_list_bullet.insert(delete_list_bullet.begin(), index_bullet);
         }
-        index++;
+        else
+        {
+            // Check for collission with asteroid
+            for (Asteroid * asteroid : asteroids)
+            {
+                if(asteroid->test_collission(bullet->get_collission_box()))
+                {
+                    // remove bullet;
+                    delete_list_bullet.insert(delete_list_bullet.begin(), index_bullet);
+                    delete_list_asteroid.insert(delete_list_asteroid.begin(), index_asteroid);
+                }
+
+                index_asteroid++;
+            }
+            index_asteroid = 0;
+            
+        }
+        index_bullet++;
     }
     
-    player1->delete_bullets(delete_list);
+    
 
     
+    
+    for (Asteroid * asteroid : asteroids)
+    {
+        
+        if(asteroidLaunchArea->out_of_bounds(asteroid->get_position()))
+        {
+            delete_list_asteroid.insert(delete_list_asteroid.begin(), index_asteroid);
+        }
+        else
+        {
+            // Check for Collission With Player:
+            if(asteroid->test_collission(player1->get_collission_box()))
+            {
+                // remove bullet;
+                player1->set_x(0);
+                player1->set_y(0);
+                asteroids.clear();
+                spawn_asteroid_wave();
+
+            }
+        }
+        index_asteroid++;
+    }
+    for(int i = delete_list_asteroid.size() - 1; i >= 0; i--)
+    {
+        asteroids.erase(asteroids.begin() + delete_list_asteroid[i] );
+    }
+
+    player1->delete_bullets(delete_list_bullet);
+
+}
+
+
+void spawn_asteroid()
+{
+    
+    // Position location = Position(-1000,1000);
+    Position location = asteroidLaunchArea->get_location();
+    double facing = get_angle_from_2_positions(location, *player1->get_position());
+    Asteroid * asteroid = new Asteroid(location.get_x(), location.get_y(), player1->get_scale(), facing);
+    asteroids.push_back(asteroid);
 
 
 }
+
+void spawn_asteroid_wave()
+{
+    for(int i = 0; i < 10; i++)
+    {
+        spawn_asteroid();
+    }
+}
+
+// End glFunctions

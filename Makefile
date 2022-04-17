@@ -1,5 +1,5 @@
 
-asteroids: main.o glFunctions.o GameObject.o Spaceship.o Arena.o math.o Position.o CollissionBox.o collission_test.o helper.o Gun.o Bullet.o 
+asteroids: main.o glFunctions.o GameObject.o Spaceship.o Arena.o math.o Position.o CollissionBox.o collission_test.o helper.o Gun.o Bullet.o AsteroidLaunchArea.o Asteroid.o
 	g++ *.o -lglut -lGLU -lGL -o asteroids
 
 main.o: main.cpp
@@ -38,6 +38,11 @@ Gun.o: Gun.cpp
 Bullet.o: Bullet.cpp
 	g++ -c Bullet.cpp
 
+AsteroidLaunchArea.o: AsteroidLaunchArea.cpp
+	g++ -c AsteroidLaunchArea.cpp
+
+Asteroid.o: Asteroid.cpp
+	g++ -c Asteroid.cpp
 # Vector.o: Vecotr.cpp
 # 	g++ -c Vector.cpp
 
